@@ -1,0 +1,25 @@
+# Specify the metadata file storing basic stats on each variant
+variants_summary = './input/variants_summary.csv'
+
+# Specify which variants to use
+# variants = '*'
+fast_mutants = ['Gln140Met-Thr520Asp', 'Leu501His', 'Thr520Asp-Leu199Hie', 'Thr520Asp',
+			    'Val258Thr-Thr520Asp', 'Met472Gln', 'Ser487Ala', 'Ala497Ser']
+slow_mutants = ['Met472Lys', 'Ile436Val', 'Glu311Asp', 'Ser391Cys',
+				'Leu501Gln', 'Ser518Gly-Ala521Gly', 'Cys250Ser', 'Cys250Glu-Glu311Cys']
+variants = fast_mutants + slow_mutants
+
+# Specify the type of transition pahtway data to use
+tp_data = True 
+order_parameters = [-0.4,0.8]
+seeds = '*'
+replicates = '*'
+subsample = 500
+num_shots = None
+time = [-110, 0]
+
+# Random seed
+random_seed = 333
+
+# Specify whether to use equilibrium (GS) data:
+gs_data = False

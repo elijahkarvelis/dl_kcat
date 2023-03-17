@@ -1,2 +1,6 @@
 # Saved datasets
 ./data/
+
+# Cache files
+__pycache*
+./input/__pycache*
