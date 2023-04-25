@@ -9,7 +9,7 @@ To run as main, run like so:
 >> python prep_data.py config.txt
 
 where config.txt file contains the settings for the script.
-For example, one monfig.txt file might read:
+For example, one config.txt file might read:
 
 
 # Specification of transition pathway data:
@@ -20,7 +20,7 @@ replicates = '*'
 time = [-110,0]
 features = None
 num_shots = None
-subsample = 300
+subsample = 500
 
 # Specifcation of whether to load GS (equilibrium) data:
 gs_data = True
@@ -736,7 +736,11 @@ class Recurrent_data():
         self.kcat = []
         self.kcat_sem = []
         self.order = []
+        self.seed = []
+        self.replicate = []
+        self.ids = []
         self.ft_names = ft_names
+        self.timesteps = []
     
     def info(self):
         print ("self.data -- data matrix, X of form [pathways, time points, features]")
@@ -744,11 +748,15 @@ class Recurrent_data():
         print ("self.kcat -- list of variant's TIS-based kcat AVG for each entry along axis 0 of self.data")
         print ("self.kcat_sem -- list of variant's TIS-based kcat SEM for each entry along axis 0 of self.data")
         print ("self.order -- list of pathway type's order parameter entry along axis 0 of self.data")
+        print ("self.seed -- list of pathway's seed paths along axis 0 of self.data")
+        print ("self.replicate -- list of pathway's replicate number along axis 0 of self.data")
+        print ("self.ids -- list of the pathway's IDs along axis 0 of self.data")
+        print ("self.timesteps -- array of the time steps labels along axis 1 of self.data")
 
 """
 Compile data across different variants into a format that can be used by sequential, recurrent models
 """
-def set_up_data_recurrent(variants_summary, variants, load_file=False, save_filename='lstm_data.data', order_parameters=[0.8],
+def set_up_data_recurrent(variants_summary, variants, load_file=False, save_filename='data.data', order_parameters=[0.8],
                           seeds='*', replicates='*', subsample=100, num_shots=None, pooled=1):
     """
     Inputs:
@@ -818,7 +826,14 @@ def set_up_data_recurrent(variants_summary, variants, load_file=False, save_file
             # Append objs data to Data
             if Data == 0:
                 Data = Recurrent_data((0,objs[0].averaged_data.shape[1],objs[0].averaged_data.shape[2]), objs[0].ft_names)
+                Data.timesteps = np.arange(time[0], (time[1]+1))
             for obj in objs:
+                seed_number = int(obj.filename.split('/seed')[-1].split('/')[0])
+                rep_number = int(obj.filename.split('/output/features')[0].split('_r')[-1])
+
+                Data.seed.extend([seed_number]*obj.averaged_data.shape[0])
+                Data.replicate.extend([rep_number]*obj.averaged_data.shape[0])
+                Data.ids.extend(obj.ids)
                 Data.variant.extend([variant]*obj.averaged_data.shape[0])
                 Data.order.extend([order]*obj.averaged_data.shape[0])
                 Data.kcat.extend([kcat_avg]*obj.averaged_data.shape[0])
@@ -826,8 +841,40 @@ def set_up_data_recurrent(variants_summary, variants, load_file=False, save_file
                 Data.data = np.append(Data.data, obj.averaged_data, axis = 0)
     
     # save data to file
-    pickle.dump(Data, open(save_filename, 'wb'), protocol=4)
-        
+    # pickle.dump(Data, open(save_filename, 'wb'), protocol=4) ###
+
+    ### Look into saving the data as a memory-mapped numpy array, so 
+    ### that you can later stream it piece-by-piece during analysis
+    ### More info: https://discuss.pytorch.org/t/memory-efficient-data-streaming-for-larger-than-memory-numpy-arrays/11928
+    ### HDF5 files are another option:
+    ### More info: https://stackoverflow.com/questions/30329726/fastest-save-and-load-options-for-a-numpy-array
+
+    """
+    save as a memory mapped array, we'll add the metadata like variant, order, 
+    kcat, kcat err as the last four columns
+    """
+    # initialize the memory mapped array
+    ax0 = Data.data.shape[0]
+    ax1 = Data.data.shape[1]
+    ax2 = Data.data.shape[2]
+    fp = np.memmap(save_filename.replace('.data',f'.{ax0}-{ax1}-{ax2}memnpy'), dtype='float32', mode='w+', shape=(ax0,ax1,ax2))
+    # NOTE: load using something like >> fp = np.memmap('filename.20000-111-72memnpy', dtype='float32', mode='r', shape=(20000,111,72))
+
+    # fill in the data matrix
+    fp[:,:,:] = Data.data
+
+    fout.write(f'\nData shape [pathways, timepoints, features]: {Data.data.shape}\n\n')
+    fout.flush()
+
+    # flush the changes to the disk
+    fp.flush()
+
+    # save only the metadata 
+    Data.data = None
+    pickle.dump(Data, open(save_filename.replace('.data','.metadata'), 'wb'), protocol=4)
+
+
+    
     return Data
 
 """
@@ -921,45 +968,47 @@ if __name__ == "__main__":
     fout.write(f'{np.unique(np.array(Data.variant)).shape[0]} variants will be used\n')
     included_variants = np.unique(np.array(Data.variant))
     fout.write(f'Variants:\n{included_variants}\n\n')
-    fout.write(f'Data shape [pathways, time points, features]: {Data.data.shape}\n')
-    if classification:
-        None
-        # # make Y discrete:
-        # wt_kcat = Data.kcat[np.argwhere(np.array(Data.variant)=='WT')[0][0]]
-        # Y = np.array([1 if ((y - wt_kcat) > 1) else 0 for y in Data.kcat])
-        # fout.write(f'Class 0 count: {np.sum(Y==0)}\n')
-        # fout.write(f'Class 1 count: {np.sum(Y==1)}\n')
-    fout.write('\nRunning cross validation...\n')
     fout.flush()
 
-    """
-    Execute training and testing for cross validation of model 
-    """
-    histories, others = kcat_pred_recurrent(Data, noisy_kcat=noisy_kcat, k=k, seed=seed, classification=classification, 
-                                            features=features, split_by_variant=split_by_variant, epochs=epochs, dropout=dropout,
-                                            recurrent_dropout=recurrent_dropout, lstm_units=lstm_units, normalize=normalize)
 
-    fout.write('\nCross validation finished\nWriting scores:\n')
-    # write output to text file
-    metrics = ['accuracy', 'auc']
-    for m in metrics:
-        fout.write(f'{m}: {histories[m][-1]}\n')
-        fout.write(f"val_{m}: {histories['val_'+m][-1]}\n")
-        fout.flush()
+    # if classification:
+    #     None
+    #     # # make Y discrete:
+    #     # wt_kcat = Data.kcat[np.argwhere(np.array(Data.variant)=='WT')[0][0]]
+    #     # Y = np.array([1 if ((y - wt_kcat) > 1) else 0 for y in Data.kcat])
+    #     # fout.write(f'Class 0 count: {np.sum(Y==0)}\n')
+    #     # fout.write(f'Class 1 count: {np.sum(Y==1)}\n')
+    # fout.write('\nRunning cross validation...\n')
+    # fout.flush()
 
-    if split_by_variant:
-        fout.write(f'others: {others}\n')
+    # """
+    # Execute training and testing for cross validation of model 
+    # """
+    # histories, others = kcat_pred_recurrent(Data, noisy_kcat=noisy_kcat, k=k, seed=seed, classification=classification, 
+    #                                         features=features, split_by_variant=split_by_variant, epochs=epochs, dropout=dropout,
+    #                                         recurrent_dropout=recurrent_dropout, lstm_units=lstm_units, normalize=normalize)
 
-    fout.write(f'\nSaving complete scores report to\n{score_file}\n')
-    fout.flush()
-    with open(score_file, 'wb') as f:
-        pickle.dump(histories, f)
-        # can load using:
-        # with open(score_file, 'rb') as f:
-        #   histories = pickle.load(f)
+    # fout.write('\nCross validation finished\nWriting scores:\n')
+    # # write output to text file
+    # metrics = ['accuracy', 'auc']
+    # for m in metrics:
+    #     fout.write(f'{m}: {histories[m][-1]}\n')
+    #     fout.write(f"val_{m}: {histories['val_'+m][-1]}\n")
+    #     fout.flush()
+
+    # if split_by_variant:
+    #     fout.write(f'others: {others}\n')
+
+    # fout.write(f'\nSaving complete scores report to\n{score_file}\n')
+    # fout.flush()
+    # with open(score_file, 'wb') as f:
+    #     pickle.dump(histories, f)
+    #     # can load using:
+    #     # with open(score_file, 'rb') as f:
+    #     #   histories = pickle.load(f)
 
 
 
-    fout.write("\n\nDONE. SUCCESSFUL\n")
-    fout.flush()
-    fout.close()
+    # fout.write("\n\nDONE. SUCCESSFUL\n")
+    # fout.flush()
+    # fout.close()

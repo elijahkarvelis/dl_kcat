@@ -2,18 +2,21 @@
 variants_summary = './input/variants_summary.csv'
 
 # Specify which variants to use
-# variants = '*'
 fast_mutants = ['Gln140Met-Thr520Asp', 'Leu501His', 'Thr520Asp-Leu199Hie', 'Thr520Asp',
 			    'Val258Thr-Thr520Asp', 'Met472Gln', 'Ser487Ala', 'Ala497Ser']
 slow_mutants = ['Met472Lys', 'Ile436Val', 'Glu311Asp', 'Ser391Cys',
 				'Leu501Gln', 'Ser518Gly-Ala521Gly', 'Cys250Ser', 'Cys250Glu-Glu311Cys']
-variants = fast_mutants + slow_mutants
+test_mutants = ['Thr520Asp', 'Cys250Ser']
+
+# variants = fast_mutants + slow_mutants
+# variants = test_mutants
+variants = '*'
 
 # Specify the type of transition pahtway data to use
 tp_data = True 
 order_parameters = [-0.4,0.8]
-seeds = '*'
-replicates = '*'
+seeds = [1,2,3,4,5]
+replicates = [1,2]
 subsample = 500
 num_shots = None
 time = [-110, 0]

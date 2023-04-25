@@ -3,4 +3,7 @@
 
 # Cache files
 __pycache*
-./input/__pycache*
+**/__pycache*
+
+# HDF5-related scripts and data, which are no longer in use
+./hdf5*
