@@ -1,5 +1,5 @@
 # Saved datasets
-./data/
+data/
 
 # Cache files
 __pycache*
@@ -7,4 +7,4 @@ __pycache*
 .ipynb_checkpoints*
 
 # HDF5-related scripts and data, which are no longer in use
-./hdf5*
+hdf5*
