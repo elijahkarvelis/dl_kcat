@@ -8,3 +8,7 @@ __pycache*
 
 # HDF5-related scripts and data, which are no longer in use
 hdf5*
+
+# Test files
+test_config.txt
+testing.ipynb
