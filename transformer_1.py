@@ -220,7 +220,7 @@ class NormalScaler():
 
 	def fit(self, x):
 		self.avg = np.mean(np.mean(x, axis=1), axis=0)
-		self.std = np.std(np.std(x, axis=1), axis=0)
+		self.std = np.sqrt(  np.mean(np.mean(x**2, axis=1), axis=0) - (self.avg**2) )
 
 	def transform(self, x):
 		if not isinstance(self.avg, np.ndarray):
@@ -261,6 +261,27 @@ class MinMaxScaler():
 		x = (x - self.min) / (self.max - self.min)
 
 		return x 
+
+
+class DataScaler():
+	# A class that can be passed as the transform argument when 
+	# making an instance of PathTorchDataset, enabling the 
+	# scaling, or normalization, of data as it is called by 
+	# the PyTorch Dataloader.
+	# INPUT:
+	# scaler -- a MinMaxScaler or NormalScaler instance that has
+	#           been fit to some data, which you want to apply
+	# OUTPUT -- when __call__(sample) executes, this will apply
+	#           the .transform() function of scaler to the data
+	#           in sample['paths'], i.e. the pathway data
+
+	def __init__(self, scaler):
+		self.scaler = scaler
+
+	def __call__(self, sample):
+		paths = scaler.transform(sample['paths'])
+		return {'paths': paths, 'kcat': sample['kcat']}
+
 
 
 class PathTorchDataset(Dataset):
@@ -385,7 +406,7 @@ if __name__ == '__main__':
 
 
 	""" #=============================================
-						 Load data
+	                       Load data
 	""" #=============================================
 	data = PathDataset(data_file, meta_file)
 	# group pathways into small sets (from same variant)
@@ -406,34 +427,36 @@ if __name__ == '__main__':
 
 	
 	""" #=============================================
-					Cross-validation loop
+                        Cross-validation loop
 	""" #=============================================
 	# define CV splitter
 	cv = GroupKFold(n_splits=cv_folds)
 	for i, (train_idx, test_idx) in enumerate(cv.split(np.arange(data.obs.obs.shape[0]), groups=data.obs.variant)):
 
+
 		# Fit the scaler to the training data
 		scaler = NormalScaler()
 		scaler.fit(data.data[np.concatenate(data.obs.obs[train_idx]),:,:])
+		data_scaler = DataScaler(scaler)
+		print ('\n\n\n\n Finished fitting SCALER \n\n\n\n')
 
-		print ('\n\n\n\n Finished sitting SCALER \n\n\n\n')
 		
 		# Define datasets and dataloaders for train and test sets
-		train_dataset = PathTorchDataset(data, elligible_idxs=train_idx)
-		test_dataset  = PathTorchDataset(data, elligible_idxs=test_idx)
+		train_dataset = PathTorchDataset(data, elligible_idxs=train_idx, transform=data_scaler)
+		test_dataset  = PathTorchDataset(data, elligible_idxs=test_idx, transform=data_scaler)
 
 		train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 		test_loader  = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
 
 
 		for batch_idx, batch in enumerate(train_loader):
-			print (batch_idx, batch['paths'].shape, batch['kcat'])
+			print (batch_idx, batch['paths'], batch['kcat'])
 
 			if batch_idx == 3:
 				break
 
 		for batch_idx, batch in enumerate(test_loader):
-			print (batch_idx, batch['paths'].shape, batch['kcat'])
+			print (batch_idx, batch['paths'], batch['kcat'])
 
 			if batch_idx == 3:
 				break
