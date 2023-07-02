@@ -752,6 +752,7 @@ class Recurrent_data():
         print ("self.replicate -- list of pathway's replicate number along axis 0 of self.data")
         print ("self.ids -- list of the pathway's IDs along axis 0 of self.data")
         print ("self.timesteps -- array of the time steps labels along axis 1 of self.data")
+        print ("self.ft_names -- array of the names of faetures along the last axis of self.data")
 
 """
 Compile data across different variants into a format that can be used by sequential, recurrent models
@@ -851,7 +852,8 @@ def set_up_data_recurrent(variants_summary, variants, load_file=False, save_file
 
     """
     save as a memory mapped array, we'll add the metadata like variant, order, 
-    kcat, kcat err as the last four columns
+    kcat, kcat err to a separate saved object with the same filename 
+    except for the suffix *metadata
     """
     # initialize the memory mapped array
     ax0 = Data.data.shape[0]
@@ -871,7 +873,7 @@ def set_up_data_recurrent(variants_summary, variants, load_file=False, save_file
 
     # save only the metadata 
     Data.data = None
-    pickle.dump(Data, open(save_filename.replace('.data','.metadata'), 'wb'), protocol=4)
+    pickle.dump(Data, open(save_filename.replace('.data',f'.{ax0}-{ax1}-{ax2}metadata'), 'wb'), protocol=4)
 
 
     
@@ -922,8 +924,6 @@ if __name__ == "__main__":
     if True:
         # Defaults:
         tp_data, gs_data = True, True
-        load_file = False
-        save_filename = 'data.data'
         variants_summary = './input/variants_summary.csv'
         random_seed = 333
         num_shots, subsample = None, None

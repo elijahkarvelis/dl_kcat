@@ -11,4 +11,12 @@ hdf5*
 
 # Test files
 test_config.txt
-testing.ipynb
+test/
+
+# Scratch work
+scr/
+transformer_1s/
+
+# Python virtual env
+.env/
+

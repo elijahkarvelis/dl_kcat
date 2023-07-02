@@ -7,8 +7,8 @@ Predict TIS-calculated k_cat values for different enzyme mutants as a
 function of their active site dynamics leading up to attempted turnover
 events. Observations of the dynamics leading to, and sometimes including,
 attempted turnover are referred to as trajectories or pathways. The 
-goal of this script is to train a model that predicts the k_cat for a 
-given mutant based on a sampled set of its trajectories.
+goal of this script is to train a transformer-based model that predicts 
+the k_cat for a given mutant based on a sampled set of its trajectories.
 
 METHOD:
 This script implements a standard transformer encoder, specialized 
@@ -31,7 +31,6 @@ loc = '/data/karvelis03/dl_kcat/'
 split_by_variant = True
 path_set_size = 10
 random_seed = 333
-lr = 0.001
 epochs = 100
 
 
@@ -79,8 +78,63 @@ batch_size --       Size of training batches. Each batch will include batch size
                     of variant observations, where each observation is comprised of 
                     path_set_size number of pathways. Default, 32. int
 random_seed --      Number with which to intialize the random number generator. int
-lr --               Learning rate for the optimizer (Adam optimizer). Default, 1e-3. (float)
 epochs --           Number of training epochs. Default, 100. (int)
+d_model -- 			The dimensions of the transformer encoder layers in the, or hidden 
+					layer sizes inside transformer encoder. All sublayers in the model 
+					will produce outputs with this dimension. (int)
+warmup_steps --     The number learning rate warmup steps to use during model training.
+                    The learning rate is gradually and linearly increased over the 
+                    course of warmup_steps training steps (each training batch and 
+                    update of learnable parameters is considered a single step) before 
+                    it decays over the course of further training. See function 
+                    warmup_decay_lr() or the Attention is All You Need paper (), on 
+                    which it is based, for more information. (int)
+
+d_model -- 			The dimensions of the transformer encoder layers in the 
+           			transformer encoder. All sublayers in the model will produce
+           			outputs with this dimension. (int)
+n_head -- 			The number of attention heads (parallel attention layers) in 
+          			each transformer encoder layer. Default, 8. (int)
+d_tran_ffn -- 		Number of neurons in the linear feedforward layer of the transformer
+              		encoder layers. Default, 2048. (int)
+dropout_tran_ecoder -- Dropout for the transformer encoder layers. Default, 0.2.
+                       (float)
+n_tran_layers -- 	Number of stacked transformer encoder layers in the transformer
+                 	encoder. Default, 4. (int)
+d_mlp_head -- 		Hidden layer size for the (middle layer) of the two layer MLP
+              		regression head. (int)
+dropout_mlp_head -- Dropout rate applied in between the two layers in the 
+                    MLP regression head. (float)
+control_model --    Whether to train a negative control model or not. If True, then
+					the target (labels) will be scrambled for the training data 
+					prior to model training (validation sets' labels are not 
+					scrambled). This setting trains a negative control model to 
+					get a sense of baseline performance for a naive model that 
+					guesses the mean across all variants, for every variant. If
+					False, then no data are scrambled. Default, False. (bool)
+stoch_labels --		Whether to stochastically sample labels (i.e, log(kcat) values)
+					according to the mean and standard error of the mean (SEM) for
+					TIS-calculated kcat values, which are specific to each mutant.
+					Each variant will have multiple 'observations,' or sets of paths
+					from which a prediction is made. When stoch_labels is False, the
+					labels for these observations will always be the mean kcat. When 
+					stoch, labels is True, the label for each observations will be 
+					sampled from a normal disribution with mean = mean kcat and 
+					standard deviation = SEM kcat. Default, False. (bool)
+selected_variants -- The variants whose data to use. This setting allows one to 
+					 specify that only a subset of the variants are to be used. 
+					 For example, if you wish to train and test on only WT, you
+					 could pass selected_variants = ['WT']. Or if you wanted 
+					 to train on only a few of the fastest mutants, you could 
+					 pass ['GLn140Met-Thr520Asp', 'Leu501His','Thr520Asp']. 
+					 Defaults to '*', in which case all variants available in 
+					 the dataset are used. (list of strings, or the character '*')
+task 			 -- The type of learning task for which to train and evaluate the 
+					model. Must be one of:
+					'kcat regression' -- regression task to predict log10(kcat)
+					'NR/R binary classification' -- classify paths as either non-reactive or
+											 reactive
+					Default, 'kcat regression'. (str)
 
 """
 
@@ -92,6 +146,8 @@ from torch import nn, Tensor
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import GroupKFold
 import math
+import numpy as np
+import pickle
 
 
 
@@ -105,9 +161,27 @@ class PathDataset():
 	# Stores the memory-mapped numpy array and corresponding
 	# Recurrent_data object with associated metadata
 
-	def __init__(self, data_file, meta_file=None, path_set_size=10):
+	def __init__(self, data_file, meta_file=None, path_set_size=10, selected_variants='*', task='kcat regression'):
+		# INPUT:
+		# All input are as described at the top of this file
+
 		self.data_file = data_file
 		self.path_set_size = path_set_size
+		self.selected_variants = selected_variants
+		self.task = task
+
+		# set self.uniform parameter:
+		# whether each observation of a variant in the self.obs
+		# object is comprised of pathways of the same type. If
+		# True, then each observation will contain pathways that
+		# are all either reactive (R) or non-reactive (NR), but
+		# never both. When False (default), observations can 
+		# contain a mixture of all types of pathways. (bool)
+		if self.task == 'kcat regression':
+			self.uniform = False
+		elif self.task == 'NR/R binary classification':
+			self.uniform = True
+
 		if meta_file != None:
 			self.meta_file = meta_file
 		else:
@@ -119,13 +193,16 @@ class PathDataset():
 		self.meta = pickle.load(open(self.meta_file, 'rb'))
 		self.obs = None
 
+		if self.selected_variants == '*':
+			# then use all the variants
+			self.selected_variants = np.unique(self.meta.variant)
 
 	def info(self):
 		print ("self.data_file -- name of the file the PathDataset is sourcing a memory-mapped numpy array from")
 		print ("self.meta_file -- name of the file the PathDataset is sourcing the meta data from (Recurrent_data object)")
 		print ("self.data -- the loaded memory-mapped numpy array")
 		print ("self.meta -- the loaded Recurrent_data object with metadata")
-		pirnt ("self.obs -- instance of Observations object. Stores indexes for each 'observation' of a mutant")
+		print ("self.obs -- instance of Observations object. Stores indexes for each 'observation' of a mutant")
 
 
 	@staticmethod
@@ -171,32 +248,50 @@ class PathDataset():
 			self.variant = []
 			self.kcat = []
 			self.kcat_sem = []
+			self.order = []
 
 			for var in np.unique(PathDataset.meta.variant):
 
-				var_paths = np.where(np.array(PathDataset.meta.variant) == var)[0]
+				if var in PathDataset.selected_variants:
+					
+					var_paths = np.where(np.array(PathDataset.meta.variant) == var)[0]
 
-				# get kcat-related metadata
-				kcat = PathDataset.meta.kcat[var_paths[0]]
-				kcat_sem = PathDataset.meta.kcat_sem[var_paths[0]]
+					# get kcat-related metadata
+					kcat = PathDataset.meta.kcat[var_paths[0]]
+					kcat_sem = PathDataset.meta.kcat_sem[var_paths[0]]
 
-				# group variant's paths into a set of 'observations'
-				n_obs = int(np.floor(var_paths.shape[0] / PathDataset.path_set_size))
-				var_obs = np.random.choice(var_paths, size=(n_obs,PathDataset.path_set_size), replace=False)
+					# group variant's paths into a set of 'observations'
+					if not PathDataset.uniform:
+						# then each observation may contain a mix of both R and NR pathways
+						n_obs = int(np.floor(var_paths.shape[0] / PathDataset.path_set_size))
+						var_obs = np.random.choice(var_paths, size=(n_obs,PathDataset.path_set_size), replace=False)
+					else:
+						# then each observation may only contain either R or NR pathways, not both
+						var_paths_nr = var_paths[np.where(np.array(PathDataset.meta.order)[var_paths] != 0.8)]
+						n_obs_nr = int(np.floor(var_paths_nr.shape[0] / PathDataset.path_set_size))
+						var_obs_nr = np.random.choice(var_paths_nr, size=(n_obs_nr,PathDataset.path_set_size), replace=False)
 
-				# append observations to list
-				self.obs.append(var_obs)
+						var_paths_r = var_paths[np.where(np.array(PathDataset.meta.order)[var_paths] == 0.8)]
+						n_obs_r = int(np.floor(var_paths_r.shape[0] / PathDataset.path_set_size))
+						var_obs_r = np.random.choice(var_paths_r, size=(n_obs_r,PathDataset.path_set_size), replace=False)
 
-				# add metadata
-				self.variant     += [var]     *var_obs.shape[0]
-				self.kcat        += [kcat]    *var_obs.shape[0]
-				self.kcat_sem    += [kcat_sem]*var_obs.shape[0]
+						var_obs = np.vstack((var_obs_nr,var_obs_r))
+					
+					# append observations to list
+					self.obs.append(var_obs)
+
+					# add metadata
+					self.variant     += [var]     *var_obs.shape[0]
+					self.kcat        += [kcat]    *var_obs.shape[0]
+					self.kcat_sem    += [kcat_sem]*var_obs.shape[0]
+					self.order.append(np.array(PathDataset.meta.order)[var_obs])
 
 			# convert all data to single numpy arrays
 			self.variant = np.array(self.variant)
 			self.kcat = np.array(self.kcat)
 			self.kcat_sem = np.array(self.kcat_sem)
 			self.obs = np.vstack(self.obs)
+			self.order = np.vstack(self.order)
 
 
 class NormalScaler():
@@ -281,12 +376,35 @@ class DataScaler():
 	#           the .transform() function of scaler to the data
 	#           in sample['paths'], i.e. the pathway data
 
-	def __init__(self, scaler):
+	def __init__(self, scaler, stoch_labels=False):
 		self.scaler = scaler
+		self.stoch_labels = stoch_labels
+
+	@staticmethod
+	def sample_kcat(mean, sem):
+		# Samples a value from a normal distribution with mean = mean
+		# and standard deviation = sem. Given that kcat must be > 0,
+		# in the event that the sampled kcat < 0 (occurs 3-6% of time), 
+		# new values are drawn until the sampled kcat is > 0
+		kcat = -1
+		while kcat <= 0:
+			kcat = np.random.normal(loc=mean, scale=sem, size=1)[0]
+		kcat = np.float32(np.log10(kcat))
+		return kcat 
 
 	def __call__(self, sample):
-		paths = scaler.transform(sample['paths'])
-		return {'paths': paths, 'kcat': sample['kcat']}
+
+		paths = self.scaler.transform(sample['paths'])
+
+		if self.stoch_labels:
+			# sample kcat value from normal dist with mean = average 
+			# kcat and std = SEM of kcat. Note: sample['kcat'] is in 
+			# log units, so we take to the power of 10
+			kcat = self.sample_kcat(10**sample['kcat'], sample['kcat sem'])
+		else:
+			kcat = sample['kcat']
+
+		return {'paths':paths, 'kcat':kcat, 'order':sample['order']}
 
 
 class PathTorchDataset(Dataset):
@@ -294,7 +412,7 @@ class PathTorchDataset(Dataset):
 	# PyTorch based on the standard PyTorch Dataset class
 	
 
-	def __init__(self, pathdataset, elligible_idxs=None, transform=None):
+	def __init__(self, pathdataset, elligible_idxs=None, transform=None, control_model=False):
 		# pathdataset -- an instance of the PathDataset object, with the 
 		#                .obs attribute populated (PathDataset)
 		# elligible_idxs -- the indexes along the attributes of
@@ -305,13 +423,20 @@ class PathTorchDataset(Dataset):
 		#                   all indexes are considered elligible. 
 		#    				(numpy array, None).
 		# transform -- transform to apply to samples (function, optional)
+		# control_model -- if True, then the targets (labels), kcat, 
+		# 				   will be randomly shuffled. (bool)
 
 		self.pathdataset = pathdataset
 		self.transform = transform
+		self.control_model = control_model
 		if elligible_idxs is None:
 			self.elligible_idxs = np.arange(self.pathdataset.obs.obs.shape[0])
 		else:
 			self.elligible_idxs = elligible_idxs
+		
+		if self.control_model:
+			self.elligible_idxs_shuffled = self.elligible_idxs.copy()
+			np.random.shuffle(self.elligible_idxs_shuffled)
 
 	def __len__(self):
 		return (self.elligible_idxs.shape[0])
@@ -326,12 +451,44 @@ class PathTorchDataset(Dataset):
 		path_idxs = self.pathdataset.obs.obs[selected_idx]
 		paths = self.pathdataset.data[path_idxs,:,:]
 
+		# Collect paths' order information
+		order = self.pathdataset.obs.order[selected_idx]
+		# we'll report order as the average across all the paths'
+		# orders in the observation. If pathdataset.uniform, then
+		# the average is exactly the order of all the paths in the
+		# observation. Otherwise when pathdataset.uniform is False, 
+		# the average will range from the lowest NR order to the 
+		# R order depending on how many paths in the observation 
+		# were R vs. NR
+		order = np.mean(order)
+		# encode the order parameter, if needed
+		if self.pathdataset.task == 'NR/R binary classification': 
+			order = 1 if order==0.8 else 0
+		order = np.float32(order)
+
 		# Collect kcat value
-		kcat = self.pathdataset.obs.kcat[selected_idx]
+		if self.control_model:
+			selected_idx_shuffled = self.elligible_idxs_shuffled[idx]
+			kcat = self.pathdataset.obs.kcat[selected_idx_shuffled]
+			kcat_sem = self.pathdataset.obs.kcat_sem[selected_idx_shuffled]
+		else:
+			kcat = self.pathdataset.obs.kcat[selected_idx]
+			kcat_sem = self.pathdataset.obs.kcat_sem[selected_idx]
 		# take log bc kcat values span several orders of magnitude
 		log_kcat = np.float32(np.log10(kcat))
-		sample = {'paths': torch.from_numpy(paths).to(device),
-				  'kcat': log_kcat}
+		kcat_sem = np.float32(kcat_sem)
+
+		try:
+			sample = {'paths': torch.from_numpy(paths).to(device),
+					  'kcat': log_kcat,
+					  'kcat sem': kcat_sem,
+					  'order': order}
+		except:
+			# executes when PathTorchDataset is imported and executed by external programs
+			sample = {'paths': torch.from_numpy(paths).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu')),
+					  'kcat': log_kcat,
+					  'kcat sem': kcat_sem,
+					  'order': order}
 
 		if self.transform:
 			sample = self.transform(sample)
@@ -393,20 +550,25 @@ class TransformerModel(nn.Module):
 	def __init__(self, 
 				 input_size: int,
 				 input_length: int,
-				 d_model: int=512,
+				 d_input_enc: int=128,
+				 d_model: int=256,
 				 max_input_length: int=500,
 				 dropout_pos_encoder: float=0.1,
-				 n_head: int=8,
-				 d_tran_ffn: int=2048,
+				 n_head: int=4,
+				 d_tran_ffn: int=1024,
 				 dropout_tran_encoder: float=0.2,
-				 n_tran_layers: int=4):
+				 n_tran_layers: int=2,
+				 d_mlp_head: int=128,
+				 dropout_mlp_head: float=0.2,
+				 task: str='kcat regression'):
 		# INPUT:
 		# input_size -- number of features in input. For example, 1 if univariate or 
 		# 			    or 70 if using 70 structural features. int
+		# input_length -- the length of each time series in time points. int
+		# d_input_enc -- hidden layer size for the (middle layer of the) 2 layer input encoder
 		# d_model -- the dimensions of the transformer encoder layers in the 
 		#            transformer encoder. All sublayers in the model will produce
 		#            outputs with this dimension. int
-		# input_length -- the length of each time series in time points. int
 		# max_input_length -- the max length of the input sequence that is being fed to 
 		#                 	  the model. This must be at least as large as the number of 
 		#                 	  time points (i.e., input_length >= input_data.shape[-2]).
@@ -422,6 +584,11 @@ class TransformerModel(nn.Module):
 		#                        float
 		# n_tran_layers -- Number of stacked transformer encoder layers in the transformer
 		#                  encoder. Default, 4. int
+		# d_mlp_head -- hidden layer size for the (middle layer) of the two layer MLP
+		#               regression head
+		# dropout_mlp_head -- dropout rate applied in between the two layers in the 
+		#                     MLP regression head
+		# task -- the type of learning task
 		# 
 		#
 
@@ -430,10 +597,12 @@ class TransformerModel(nn.Module):
 		self.input_size = input_size
 		self.input_length = input_length
 		self.model_type = 'PredictiveTransformerEncoder'
+		self.task = task
 
 		# Linear layer for encoding raw input
-		self.input_encoder = nn.Linear(in_features=input_size, 
-									   out_features=d_model)
+		self.input_encoder = nn.Sequential(nn.Linear(in_features=input_size, out_features=d_input_enc),
+										   nn.ReLU(), #nn.Dropout(0.1) ???
+							 			   nn.Linear(in_features=d_input_enc, out_features=d_model))
 
 		# Positional encoder
 		self.pos_encoder = PositionalEncoding(d_model, dropout_pos_encoder, input_length)
@@ -446,8 +615,12 @@ class TransformerModel(nn.Module):
 		self.transformer_encoder = nn.TransformerEncoder(encoder_layers, n_tran_layers)
 
 		# Prediction head (MLP layer)
-		self.mlp_head = nn.Linear(in_features=input_length*d_model,
-								  out_features=1)
+		self.mlp_head = nn.Sequential(nn.Linear(in_features=d_model, out_features=d_mlp_head),
+									  nn.ReLU(),
+									  nn.Dropout(dropout_mlp_head),
+									  nn.Linear(in_features=d_mlp_head, out_features=1))
+
+		self.sigmoid = nn.Sigmoid() # used when self.task == 'NR/R binary classification'
 
 
 	def forward(self, src: Tensor, src_mask: Tensor=None) -> Tensor:
@@ -520,14 +693,21 @@ class TransformerModel(nn.Module):
 		seems to run faster, or at least it for sure isn't slower
 		"""
 		# convert src from 4D to 3D by stacking the first axis
-		start_enc = time.time()
 		orig_shape = src.shape
+		# print ('Transformer')
+		# print (f'src.shape: {src.shape}')
 		src = src.view(-1, orig_shape[-2], orig_shape[-1]) # double check that this is equivalent to vstacking
+		# print (f'src.shape: {src.shape}')
 		enc1 = self.transformer_encoder(src)
 		# convert enc1 back to 4D from 3D; this recovers separate batches along first axis
 		enc1 = enc1.view(-1, orig_shape[-3], orig_shape[-2], orig_shape[-1]) # double check that this is the inverse of vstacking and recovers the batches
-		# print (f'enc runtime: {time.time() - start_enc}')
 		# print (f'enc1.shape: {enc1.shape}\n\n')
+
+
+		# Do average pooling for each pathway across its time points
+		# print (f'enc1.shape: {enc1.shape}')
+		enc1 = torch.mean(enc1, 2)
+		# print (f'enc1.shape: {enc1.shape}')
 
 
 		# Take average across all paths in each observation (experiment with inclusion of other moments and/or max pooling)
@@ -540,7 +720,7 @@ class TransformerModel(nn.Module):
 		# Flatten each observation's averaged time series
 		# print ('Flattening avg time series')
 		# print (f'enc.shape: {enc.shape}')
-		enc = torch.flatten(enc, start_dim=1)
+		# enc = torch.flatten(enc, start_dim=1)
 		# print (f'enc.shape: {enc.shape}\n\n')
 
 		# Prediction head
@@ -551,8 +731,38 @@ class TransformerModel(nn.Module):
 		# print (out, '\n\n')
 
 
+		if self.task == 'kcat regression':
+			return out
+		elif self.task == 'NR/R binary classification':
+			return self.sigmoid(out)
 
-		return out
+
+def warmup_decay_lr(step, d_model=256, warmup_steps=4000):
+	# Learning rate schedule based on that used in Attention is All You Need:
+	# https://arxiv.org/pdf/1706.03762.pdf
+	# An adjustment was made to account for the lower-dimensional models
+	# used in the default TransformerModel module. Specifically, the original 
+	# schedule from Attention is All You Need is multiplied by a factor
+	# of 1/sqrt(2) because the dimension of our default TransformerModel 
+	# (dmodel) is half that of models used in Attention is All You Need.
+	# INPUT:
+	# step -- the training step count. Each training batch and update of 
+	# 		  learned parameters is considered a single step. int
+	# d_model -- the dimensions of the transformer encoder layers in the 
+	#            transformer encoder. All sublayers in the model will produce
+	#            outputs with this dimension. int
+	# warmup_steps -- the number of warmup steps to use. int
+
+	if step == 0:
+		return 0
+
+	term1 = step**-0.5
+	term2 = step*warmup_steps**-1.5
+	term = np.array([term1,term2])
+
+	lr = (2*d_model)**-0.5 * np.min(term, axis=0)
+
+	return lr
 
 
 def train(model, dataloader) -> None:
@@ -564,7 +774,7 @@ def train(model, dataloader) -> None:
 
 
 		model.train()
-		total_loss = 0.0
+		total_loss, total_acc = 0.0, 0.0
 		start_time = time.time()
 		log_interval = 25 # print info every log_interval number of batches
 
@@ -576,7 +786,12 @@ def train(model, dataloader) -> None:
 			# print (type(output), output, output.dtype)
 			# print (type(batch['kcat'].view(-1,1)), batch['kcat'].view(-1,1), batch['kcat'].view(-1,1).dtype)
 
-			loss = loss_fn(output, batch['kcat'].view(-1,1))
+			if model.task == 'kcat regression':
+				loss = loss_fn(output, batch['kcat'].view(-1,1))
+			elif model.task == 'NR/R binary classification':
+				loss = loss_fn(output, batch['order'].view(-1,1))
+				acc = (output.round() == batch['order'].view(-1,1)).float().mean()
+				total_acc += acc
 
 			# backward pass
 			optimizer.zero_grad()
@@ -591,24 +806,44 @@ def train(model, dataloader) -> None:
 			total_loss += loss.item()
 
 
-			if (batch_idx+1) % log_interval == 0:
+			if ((batch_idx+1) % log_interval == 0) or ((batch_idx+1) == len(dataloader)):
+				
 				# print progress and info
 				time_per_batch = (time.time() - start_time) / log_interval
 				current_loss = total_loss / log_interval
+				current_acc = total_acc / log_interval # only reported when task is 'NR/R binary classification'
 				root_loss = math.sqrt(current_loss)
+				curr_lr = scheduler.get_last_lr()[0]
 
-				print (f'epoch {epoch} | CV fold {cv_fold}/{cv_folds} | {batch_idx+1:d}/{len(dataloader):d} batches | '
-					   f'lr {lr:0.3e} | seconds/batch {time_per_batch:.3f} | '
-					   f'loss {current_loss:.3e} | sqrt(loss) {root_loss:.3e}')
-				output_text.write(f'epoch {epoch} | CV fold {cv_fold}/{cv_folds} | {batch_idx+1:d}/{len(dataloader):d} batches | '
-					   f'lr {lr:0.3e} | seconds/batch {time_per_batch:.3f} | '
-					   f'loss {current_loss:.3e} | sqrt(loss) {root_loss:.3e}\n')
+				if model.task == 'kcat regression':
+					print (f'epoch {epoch} | CV fold {cv_fold}/{cv_folds} | {batch_idx+1:d}/{len(dataloader):d} batches | '
+						   f'lr {curr_lr:0.3e} | seconds/batch {time_per_batch:.3f} | '
+						   f'loss {current_loss:.3e} | sqrt(loss) {root_loss:.3e}')
+					output_text.write(f'epoch {epoch} | CV fold {cv_fold}/{cv_folds} | {batch_idx+1:d}/{len(dataloader):d} batches | '
+						   f'lr {curr_lr:0.3e} | seconds/batch {time_per_batch:.3f} | '
+						   f'loss {current_loss:.3e} | sqrt(loss) {root_loss:.3e}\n')
+
+				elif model.task == 'NR/R binary classification':
+					print (f'epoch {epoch} | CV fold {cv_fold}/{cv_folds} | {batch_idx+1:d}/{len(dataloader):d} batches | '
+						   f'lr {curr_lr:0.3e} | seconds/batch {time_per_batch:.3f} | '
+						   f'loss {current_loss:.3e} | sqrt(loss) {root_loss:.3e} | '
+						   f'acc {current_acc:.5f}')
+					output_text.write(f'epoch {epoch} | CV fold {cv_fold}/{cv_folds} | {batch_idx+1:d}/{len(dataloader):d} batches | '
+						   f'lr {curr_lr:0.3e} | seconds/batch {time_per_batch:.3f} | '
+						   f'loss {current_loss:.3e} | sqrt(loss) {root_loss:.3e} | '
+						   f'acc {current_acc:.5f}\n')
+
+					total_acc = 0.0
+
 				output_text.flush()
 
 				# reset loss and timer for next round of log_interval number of batches
-				total_loss = 0
+				total_loss = 0.0
 				start_time = time.time()
 
+
+			# update learning rate
+			scheduler.step()
 
 def evaluate(model, dataloader) -> float:
 	# Model evaluation function. Typically, this is to be
@@ -624,20 +859,31 @@ def evaluate(model, dataloader) -> float:
 	# is the sum of the SE over all observations in dataloader
 
 		model.eval()
-		total_loss = 0.0
+		total_loss, total_acc = 0.0, 0.0
 		total_obs = 0
 		with torch.no_grad():
 			for batch_idx, batch in enumerate(dataloader):
 				n_obs = batch['paths'].size(0)
 
 				output = model(batch['paths'])
-				loss = loss_fn(output, batch['kcat'].view(-1,1))
+
+				if model.task == 'kcat regression':
+					loss = loss_fn(output, batch['kcat'].view(-1,1))
+
+				elif model.task == 'NR/R binary classification':
+					loss = loss_fn(output, batch['order'].view(-1,1))
+					acc = (output.round() == batch['order'].view(-1,1)).float().mean()
+					total_acc += acc * n_obs
+
 				total_loss += loss.item() * n_obs
 				total_obs += n_obs
 
-		avg_loss = total_loss / total_obs # this is equivalent to MSE
 
-		return {'total loss': total_loss, 'avg loss': avg_loss}
+
+		avg_loss = total_loss / total_obs # this is equivalent to MSE when doing 'kcat regression' task
+		avg_acc  = total_acc / total_obs # this will be 0 when doing 'kcat regression' task
+
+		return {'total loss':total_loss, 'avg loss':avg_loss, 'avg acc':avg_acc}
 
 
 
@@ -656,13 +902,25 @@ if __name__ == '__main__':
 
 	# read in settings to overwrite defaults
 	split_by_variant = True
+	control_model = False
 	random_seed = 333
 	path_set_size = 10
 	batch_size = 32
 	cv_folds = 5
-	lr = 1e-3
-	epochs = 3
+	# lr = 1e-3
+	epochs = 50
 	output_text = './transformer_1_output.txt'
+	d_model = 256
+	n_head = 4
+	d_tran_ffn = 1024
+	dropout_tran_encoder = 0.2
+	n_tran_layers = 2
+	d_mlp_head = 128
+	dropout_mlp_head = 0.2
+	warmup_steps = 4000
+	stoch_labels = False
+	selected_variants = '*'
+	task = 'kcat regression'
 	with open(sys.argv[1], 'r') as f:
 		settings = f.read()
 		exec(settings)
@@ -677,7 +935,7 @@ if __name__ == '__main__':
 	# open a file for writing progress
 	output_text = open(output_text, 'w')
 
-	# Device configuration
+	# device configuration
 	device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 	print ('DEVICE: ', device)
 
@@ -685,10 +943,10 @@ if __name__ == '__main__':
 	""" #=============================================
 	                       Load data
 	""" #=============================================
-	data = PathDataset(data_file, meta_file, path_set_size=path_set_size)
+	data = PathDataset(data_file, meta_file, path_set_size=path_set_size, 
+					   selected_variants=selected_variants, task=task)
 	# group pathways into small sets (from same variant)
 	data.make_observations()
-
 
 
 	""" #=============================================
@@ -696,43 +954,54 @@ if __name__ == '__main__':
 	""" #=============================================
 	# define CV splitter
 	cv = GroupKFold(n_splits=cv_folds)
-	for i, (train_idx, test_idx) in enumerate(cv.split(np.arange(data.obs.obs.shape[0]), groups=data.obs.variant)):
+	if (len(selected_variants) < cv_folds) and (selected_variants != '*'):
+		groups = np.random.choice(cv_folds, size=data.obs.obs.shape[0])
+	else:
+		groups = data.obs.variant
+
+	for i, (train_idx, test_idx) in enumerate(cv.split(np.arange(data.obs.obs.shape[0]), groups=groups)):
 
 		cv_fold = i+1
 
 		# Define a new model
 		model = TransformerModel(input_size=data.data.shape[-1],
 								 input_length=data.data.shape[-2],
-								 d_model=256,
-								 n_head=4,
-								 n_tran_layers=2,
-								 d_tran_ffn=512).to(device)
+								 d_model=d_model,
+								 n_head=n_head,
+								 d_tran_ffn=d_tran_ffn,
+								 dropout_tran_encoder=dropout_tran_encoder,
+								 n_tran_layers=n_tran_layers,
+								 d_mlp_head=d_mlp_head,
+								 dropout_mlp_head=dropout_mlp_head,
+								 task=task).to(device)
 
 		total_params = sum(p.numel() for p in model.parameters())
 		trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 		print (f'Total parameters:     {total_params}')
 		print (f'Trainable parameters: {trainable_params}')
 
-		# Define loss and optimizer, CONSIDER ADDING SCHEDULER FOR LR
-		loss_fn = nn.MSELoss()
-		optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-		# scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1.0, gamma=0.95)
+		# Define loss, optimizer, and a learning rate scheduler
+		if model.task == 'kcat regression':
+			loss_fn = nn.MSELoss()
+		elif model.task == 'NR/R binary classification':
+			loss_fn = nn.BCELoss()
+		optimizer = torch.optim.Adam(model.parameters(), lr=1) # lr will be scaled and set by scheduler
+		scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, warmup_decay_lr)
 
 
 		# Fit the scaler to the training data
 		scaler = NormalScaler()
 		scaler.fit(data.data[np.concatenate(data.obs.obs[train_idx]),:,:])
-		data_scaler = DataScaler(scaler)
+		train_data_scaler = DataScaler(scaler, stoch_labels=stoch_labels)
+		test_data_scaler  = DataScaler(scaler, stoch_labels=False)
 		# print ('\n\n\n\n Finished fitting SCALER \n\n\n\n')
 
 
-
 		# Define datasets and dataloaders for train and test sets
-		train_dataset = PathTorchDataset(data, elligible_idxs=train_idx, transform=data_scaler)
-		test_dataset  = PathTorchDataset(data, elligible_idxs=test_idx, transform=data_scaler)
+		train_dataset = PathTorchDataset(data, elligible_idxs=train_idx, transform=train_data_scaler, control_model=control_model)
+		test_dataset  = PathTorchDataset(data, elligible_idxs=test_idx, transform=test_data_scaler)
 		train_variants = np.unique(train_dataset.pathdataset.obs.variant[train_dataset.elligible_idxs])
 		test_variants = np.unique(test_dataset.pathdataset.obs.variant[test_dataset.elligible_idxs])
-
 
 		print ('\n\nTraining variants:')
 		print (train_variants, '\n\n')
@@ -742,15 +1011,52 @@ if __name__ == '__main__':
 		output_text.flush()
 
 
+
+
+
+
+		# """ TEST BLOCK """
+
+		# # initialize data loading, explicitly seed random number generators for reproducibility
+		# train_rng, test_rng = torch.Generator(), torch.Generator()
+		# train_rng.manual_seed(int(random_seed*1e10/41))
+		# test_rng.manual_seed(int(random_seed*1e10/79))
+		# train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, generator=train_rng)
+		# test_loader  = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, generator=test_rng)
+
+
+		# for batch_idx, batch in enumerate(train_loader):
+			
+		# 	print ('BATCH: ', batch_idx)
+		# 	print (batch['kcat'])
+		# 	print (batch['order'])
+		# 	print (batch['paths'].shape)
+		# 	print ('\n\n\n\n\n')
+
+
+
+
+		# """ END TEST BLOCK """
+
+
+
+
+
+
+
+
 		best_val_loss = float('inf')
-		best_model_file = 'best_model.pt'
+		best_model_file = f'best_model_cvfold{cv_fold}.pt'
 		for epoch in range(1, (epochs+1)):
 
 			start_epoch = time.time()
 
-			# initialize data loading
-			train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-			test_loader  = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
+			# initialize data loading, explicitly seed random number generators for reproducibility
+			train_rng, test_rng = torch.Generator(), torch.Generator()
+			train_rng.manual_seed(int(random_seed*1e10/41/epoch))
+			test_rng.manual_seed(int(random_seed*1e10/79/epoch))
+			train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, generator=train_rng)
+			test_loader  = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, generator=test_rng)
 
 			# train and test model
 			train(model, train_loader)
@@ -758,16 +1064,32 @@ if __name__ == '__main__':
 
 			# report results
 			epoch_duration = time.time() - start_epoch
-			loss, mse = val_results['total loss'], val_results['avg loss']
+			loss, mse, acc = val_results['total loss'], val_results['avg loss'], val_results['avg acc']
 			print ('\n\n','-'*80)
-			print (f'End of epoch {epoch} | CV fold {cv_fold}/{cv_folds} | time: {epoch_duration:.1f}s | '
-         		   f'valid loss (MSE) {mse:.3f} | RMSE {mse**0.5:.3f}')
+			output_text.write('\n\n'+'-'*80+'\n')
+
+			if model.task == 'kcat regression':
+				print (f'End of epoch {epoch} | CV fold {cv_fold}/{cv_folds} | '
+					   f'time: {epoch_duration:.1f}s | '
+	         		   f'valid loss (MSE) {mse:.3f} | RMSE {mse**0.5:.3f}')
+
+				output_text.write(f'End of epoch {epoch} | CV fold {cv_fold}/{cv_folds} | '
+					 			  f'time {epoch_duration:.1f}s | '
+	         		   			  f'valid loss (MSE) {mse:.3f} | RMSE {mse**0.5:.3f}\n')
+
+			elif model.task == 'NR/R binary classification':
+				print (f'End of epoch {epoch} | CV fold {cv_fold}/{cv_folds} | '
+					   f' time: {epoch_duration:.1f}s | '
+	         		   f'valid loss {mse:.3f} | '
+	         		   f'accuracy {acc:.5f}')
+
+				output_text.write(f'End of epoch {epoch} | CV fold {cv_fold}/{cv_folds} | '
+								  f'time {epoch_duration:.1f}s | '
+	         		   			  f'valid loss {mse:.3f} | '
+	         		   			  f'accuracy {acc:.5f}\n')
+			
 			print ('\nValidation variants:')
 			print (test_variants)
-
-			output_text.write('\n\n'+'-'*80+'\n')
-			output_text.write(f'End of epoch {epoch} | CV fold {cv_fold}/{cv_folds} | time {epoch_duration:.1f}s | '
-         		   			  f'valid loss (MSE) {mse:.3f} | RMSE {mse**0.5:.3f}\n')
 			output_text.write('\nValidation variants:\n')
 			output_text.write(str(test_variants))
 			output_text.write('\n')

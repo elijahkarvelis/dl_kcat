@@ -1,23 +1,33 @@
 # Specify the metadata file storing basic stats on each variant
-variants_summary = './input/variants_summary.csv'
+variants_summary = '/data/karvelis03/dl_kcat/input/variants_summary.csv'
 
 # Specify which variants to use
-fast_mutants = ['Gln140Met-Thr520Asp', 'Leu501His', 'Thr520Asp-Leu199Hie', 'Thr520Asp',
-			    'Val258Thr-Thr520Asp', 'Met472Gln', 'Ser487Ala', 'Ala497Ser']
-slow_mutants = ['Met472Lys', 'Ile436Val', 'Glu311Asp', 'Ser391Cys',
-				'Leu501Gln', 'Ser518Gly-Ala521Gly', 'Cys250Ser', 'Cys250Glu-Glu311Cys']
-test_mutants = ['Thr520Asp', 'Cys250Ser']
+test_mutants = ['Leu501His', 'Thr520Asp-Leu199Hie', 'Met472Gln', 'Ser276Ala', 
+			    'Ala497Ser', 'Leu501Hie', 'Asp346Pro', 'Gln140Met-Ser225Gly',
+			    'Leu347Glu', 'Asn502Hie', 'Ser518Gly-Ala521Gly', 'Glu492Asn'] # 12 variants evenly spaced along raw kcat
 
-# variants = fast_mutants + slow_mutants
-# variants = test_mutants
-variants = '*'
+train_mutants = ['Gln140Met-Thr520Asp', 'Leu261Asn', 'Ser295Gly', 'Phe504Hid',
+				 'Thr520Asp', 'Ser487Ala', 'Ala278Ser', 'Val258Thr-Thr520Asp',
+				 'Leu195Hid', 'Cys517Gly-Ser518Gly', 'Ser225Gly-Gln140Glu',
+				 'Val415Asp', 'Val258Thr', 'Thr520Ser', 'Leu347Tyr', 'Gln140Met',
+				 'Leu347Hid', 'Gln475Leu', 'Met254Gln-Thr520Asn', 'Phe504Met',
+				 'Ser257Ala', 'Ser276Ala-Glu311Asp', 'WT', 'Leu501Hid',
+				 'Ser135Ala-Ser225Gly', 'Ala278Gly', 'Ile398Thr', 'Ala139Gly',
+				 'Thr464Ala', 'Leu199Hip-Gln140Glu', 'Leu372Gln', 'Glu345Tyr',
+				 'Ala291Gly', 'Ser225Gly-Ser518Gly', 'Gln475Hie', 'Ser344Tyr',
+				 'Cys250Glu-Glu311Cys', 'Cys250Ser', 'Leu501Gln', 'Ser391Cys',
+				 'Glu311Asp', 'Ile436Val', 'Met472Lys']
+
+total_mutants = train_mutants + test_mutants
+
+variants = test_mutants
 
 # Specify the type of transition pahtway data to use
 tp_data = True 
-order_parameters = [-0.4,0.8]
+order_parameters = [0.8]
 seeds = [1,2,3,4,5]
 replicates = [1,2]
-subsample = 500
+subsample = 1000
 num_shots = None
 time = [-110, 0]
 
@@ -26,3 +36,7 @@ random_seed = 333
 
 # Specify whether to use equilibrium (GS) data:
 gs_data = False
+
+package_loc = '/data/karvelis03/dl_kcat/'
+
+output_text = './prep_data_output_Rtest.txt'
