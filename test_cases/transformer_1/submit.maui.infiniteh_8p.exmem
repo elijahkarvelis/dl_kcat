@@ -1,0 +1,14 @@
+#!/bin/tcsh -f
+set user=`whoami`
+set submit_file=/tmp/"$user"_$$
+set current_dir=`pwd`
+echo "cd $current_dir" > $submit_file
+echo "hostname" >> $submit_file
+echo "date" >> $submit_file
+echo "time $*" >> $submit_file
+/usr/bin/qsub -r n -q default -j oe -l nodes=1:ppn=8 -l vmem=50000Mb,mem=50000Mb -l walltime=100000:00:00 $submit_file
+/bin/rm $submit_file
+# -j oe | joins std. error stream with std. out
+# -q    | destination of the queue
+# -r n  | means the job is not rerunable
+# -l    | defines job resource requirements

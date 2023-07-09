@@ -1,0 +1,21 @@
+data_file = '/data/karvelis03/dl_kcat/data/total/tptrue_gsfalse_o-0dot4_0dot8_s1_2_3_4_5_r1_2_t-35_75_sub500_numNone.550000-111-70memnpy'
+meta_file = '/data/karvelis03/dl_kcat/data/total/tptrue_gsfalse_o-0dot4_0dot8_s1_2_3_4_5_r1_2_t-35_75_sub500_numNone.550000-111-70metadata'
+loc = '/data/karvelis03/dl_kcat/'
+path_set_size = 10
+batch_size = 32
+cv_folds = 2
+epochs = 5
+
+d_model = 32
+n_head = 1
+d_tran_ffn = 64
+dropout_tran_encoder = 0.2
+n_tran_layers = 1
+d_mlp_head = 32
+dropout_mlp_head = 0.2
+
+task = 'NR/R binary classification'
+
+stoch_labels = False
+
+control_model = False

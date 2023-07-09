@@ -135,42 +135,6 @@ task 			 -- The type of learning task for which to train and evaluate the
 					'NR/R binary classification' -- classify paths as either non-reactive or
 											 reactive
 					Default, 'kcat regression'. (str)
-dw_settings 	 -- Passes the parameters to use inside the DenseWeight method for
-					controlling the weighting of individual sample's terms in the loss
-					function. The DenseWeight method is described here:
-					https://link.springer.com/article/10.1007/s10994-021-06023-5, 
-					and implemented using their Python package here:
-					https://github.com/SteiMi/denseweight, with inspiration taken
-					from the original paper's GitHub repo here:
-					https://github.com/SteiMi/density-based-weighting-for-imbalanced-regression/tree/main/exp1_and_2.
-					dw_settings is a dictionary specifying kwargs for DenseWeight, e.g.
-					
-					dw_settings = {'alpha':0.9, 'bandwidth':1, 'eps':1e-6'}
-					
-					'alpha' controls the strength of the weighting. When set 
-						to 0, no weighting is applied and all terms are 
-						weighed equally. 'alpha' controls the alpha parameter as
-						described in the paper. Increasing its value places relatively
-						larger weights on the loss terms corresponding to less 
-						frequent samples/observations. Therefore, set alpha to
-						positive values (0.0 - 2.0 is probably a good range) to 
-						more strongly weight less frequent values as a means to give 
-						more equal influence across the range of kcat values in 
-						our dataset (which is largely biased toward kcat near WT 
-						value, otherwise). The higher the value of alpha, the 
-						more the weighting emphasizes differences in density of 
-						samples/observations. Values around 0.9 are resonable. (float)
-					'bandwidth' controls the bandwidth of the kernel density-fitting
-					    function used by DenseWeight to calculate the empirical 
-					    probability density. Smaller bandwidth = higher resolution.
-					    Larger bandwidth = smoother density. A value of 1, the method's
-					    default, is reasonable. (float)
-					'eps' sets the minimum weight to be applied to a term in the 
-					    loss function. The DensWeight default is 1e-6. (float)
-
-					Default, dw_settings = None, in which case no loss weighting 
-					is applied. (dict)				
-
 
 """
 
@@ -184,8 +148,6 @@ from sklearn.model_selection import GroupKFold
 import math
 import numpy as np
 import pickle
-from denseweight import DenseWeight
-import matplotlib.pyplot as plt
 
 
 
@@ -442,11 +404,7 @@ class DataScaler():
 		else:
 			kcat = sample['kcat']
 
-		t_sample = {'paths': torch.from_numpy(paths).to(device),
-	      			'kcat': torch.from_numpy(np.array(kcat)).to(device),
-					'order': torch.from_numpy(np.array(sample['order'])).to(device)}
-
-		return t_sample
+		return {'paths':paths, 'kcat':kcat, 'order':sample['order']}
 
 
 class PathTorchDataset(Dataset):
@@ -520,33 +478,20 @@ class PathTorchDataset(Dataset):
 		log_kcat = np.float32(np.log10(kcat))
 		kcat_sem = np.float32(kcat_sem)
 
-		# try:
-			# sample = {'paths': torch.from_numpy(paths).to(device),
-			# 			'kcat': log_kcat,
-			# 			'kcat sem': kcat_sem,
-			# 			'order': order}
-		# except:
-		# 	# executes when PathTorchDataset is imported and executed by external programs
-		# 	sample = {'paths': torch.from_numpy(paths).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu')),
-		# 			  'kcat': log_kcat,
-		# 			  'kcat sem': kcat_sem,
-		# 			  'order': order}
-
-		sample = {'paths': paths,
-				  'kcat': log_kcat,
-				  'kcat sem': kcat_sem,
-				  'order': order}
+		try:
+			sample = {'paths': torch.from_numpy(paths).to(device),
+					  'kcat': log_kcat,
+					  'kcat sem': kcat_sem,
+					  'order': order}
+		except:
+			# executes when PathTorchDataset is imported and executed by external programs
+			sample = {'paths': torch.from_numpy(paths).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu')),
+					  'kcat': log_kcat,
+					  'kcat sem': kcat_sem,
+					  'order': order}
 
 		if self.transform:
 			sample = self.transform(sample)
-		else:
-			try:
-				for i in sample:
-					sample[i] = torch.from_numpy(sample[i]).to(device)
-			except:
-				# executes when PathTorchDataset is imported and executed by external programs
-				for i in sample:
-					sample[i] = torch.from_numpy(sample[i]).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
 		return sample
 
@@ -792,50 +737,6 @@ class TransformerModel(nn.Module):
 			return self.sigmoid(out)
 
 
-class DenseLoss(nn.Module):
-    # Implements the DenseLoss loss function using DenseWeight
-	# method (and object) as described here:
-	# https://link.springer.com/article/10.1007/s10994-021-06023-5
-	
-	def __init__(self, dw):
-		# INPUT:
-		# dw -- an instance of DenseWeight that has been fit to data
-		#    	by running its .fit() method
-		super().__init__()
-		self.dw = dw
-	
-	def forward(self, preds, targets):
-		# Calculate relevance (weight) for each sample
-
-		weights = torch.from_numpy( self.dw(targets.cpu().numpy()) ).to(device)
-
-		# Calculate weighted MSE
-		err = torch.pow(preds - targets, 2)
-		err_weighted = weights * err
-		mse = err_weighted.mean()
-
-		return mse
-
-
-def define_loss(model, dw=None):
-	# Defines the loss function based on the model's prediction task, 
-	# and whether loss weighting with DenseWeight is activated
-	# INPUT:
-	# model -- instance of TransformerModel
-	# dw -- instance of DenseWeight or None. If None (default),
-	#		then DenseWeight and DenseLoss are not applied, and 
-	# 		observations' loss terms are weighted equally
-
-	if (model.task == 'kcat regression') and (dw == None):
-		loss_fn = nn.MSELoss()
-	elif model.task == 'kcat regression':
-		loss_fn = DenseLoss(dw)
-	elif model.task == 'NR/R binary classification':
-		loss_fn = nn.BCELoss()
-
-	return loss_fn
-
-
 def warmup_decay_lr(step, d_model=256, warmup_steps=4000):
 	# Learning rate schedule based on that used in Attention is All You Need:
 	# https://arxiv.org/pdf/1706.03762.pdf
@@ -985,63 +886,6 @@ def evaluate(model, dataloader) -> float:
 		return {'total loss':total_loss, 'avg loss':avg_loss, 'avg acc':avg_acc}
 
 
-def plot_dw_alpha(pathdataset, alphas=[0, 0.5, 0.90, 0.95, 1.0], figsize=(16,8), figname=False):
-	# Plot weights vs. log10(kcat) for different alpha
-	# INPUT
-	# pathdataset -- PathDataset object with the .obs attribute
-	#				 populated. Or, a PyTorch DataLoader object 
-	#				 constructed on a PathDataset object
-	# alphas -- the DenseWeight alpha values with which to calculate
-	#			weights for each kcat in pathdataset.obs.kcat
-	# figsize -- figure size
-	# figname -- file to which to save the plot
-
-	if isinstance(pathdataset, PathDataset):
-		kcats = np.log10(pathdataset.obs.kcat)
-
-	elif isinstance(pathdataset, DataLoader):
-		kcats = []
-		for batch_idx, batch in enumerate(train_loader):
-			kcats.append(batch['kcat'].detach().cpu().numpy())
-		kcats = np.concatenate(kcats)
-
-	weights = {}
-	df = pd.DataFrame(kcats, columns=['kcat'])
-	df['bins'] = pd.cut(df['kcat'], bins=5)
-	x = np.linspace(np.min(kcats), np.max(kcats), 100)
-	for a in alphas:
-		dw = DenseWeight(alpha=a, eps=1e-6, bandwidth=1)
-		dw.fit(kcats)
-		weights[a] = dw(x)
-		df[f'weights (a={a})'] = dw(df['kcat'].to_numpy())
-
-	# Plot
-	fig, axes = plt.subplots(2, 3, figsize=figsize)
-	for i,a in enumerate(weights):
-		axes.flatten()[0].plot(x, weights[a], label=fr'$\alpha={a}$')
-		
-		ax = axes.flatten()[i+1]
-		print (df)
-		weight_sum = df.groupby(by='bins').apply(lambda x: np.sum(x[f'weights (a={a})'].to_numpy()))
-		print (weight_sum)
-		weight_sum.plot.bar(x='bins', ax=ax, title=fr'$\alpha={a}$')
-		if (i+1) == len(weights):
-			for tick in ax.get_xticklabels():
-				tick.set_rotation(45)
-				tick.set_fontsize=9
-		else:
-			ax.set_xticklabels(ax.get_xticks(), rotation=45)
-		ax.set_ylabel('Sum of weights')
-		print ('\n\n')
-
-	axes.flatten()[0].hist(kcats, label=r'$p(log_{10}(k_{cat}))$', density=True)
-	axes.flatten()[0].legend(fontsize=9)
-	# axes.flatten()[0].set_xlabel(r'$log_{10}(k_{cat})$')
-	fig.text(0.5, 0.02, r'$log_{10}(k_{cat})$', ha='center', fontsize=20)
-	fig.tight_layout()
-	fig.savefig(figname)
-
-	return
 
 
 """ ============================================== """
@@ -1077,7 +921,6 @@ if __name__ == '__main__':
 	stoch_labels = False
 	selected_variants = '*'
 	task = 'kcat regression'
-	dw_settings = None
 	with open(sys.argv[1], 'r') as f:
 		settings = f.read()
 		exec(settings)
@@ -1137,6 +980,14 @@ if __name__ == '__main__':
 		print (f'Total parameters:     {total_params}')
 		print (f'Trainable parameters: {trainable_params}')
 
+		# Define loss, optimizer, and a learning rate scheduler
+		if model.task == 'kcat regression':
+			loss_fn = nn.MSELoss()
+		elif model.task == 'NR/R binary classification':
+			loss_fn = nn.BCELoss()
+		optimizer = torch.optim.Adam(model.parameters(), lr=1) # lr will be scaled and set by scheduler
+		scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, warmup_decay_lr)
+
 
 		# Fit the scaler to the training data
 		scaler = NormalScaler()
@@ -1144,22 +995,6 @@ if __name__ == '__main__':
 		train_data_scaler = DataScaler(scaler, stoch_labels=stoch_labels)
 		test_data_scaler  = DataScaler(scaler, stoch_labels=False)
 		# print ('\n\n\n\n Finished fitting SCALER \n\n\n\n')
-
-
-		# Fit weighting function to the training data, if weighted loss is activated
-		if dw_settings != None:
-			dw = DenseWeight(alpha=dw_settings['alpha'],
-							 bandwidth=dw_settings['bandwidth'],
-							 eps=dw_settings['eps'])
-			dw.fit(np.log10(data.obs.kcat[train_idx]))
-		else: 
-			dw = None
-
-
-		# Define loss, optimizer, and a learning rate scheduler
-		loss_fn = define_loss(model, dw)
-		optimizer = torch.optim.Adam(model.parameters(), lr=1) # lr will be scaled and set by scheduler
-		scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, warmup_decay_lr)
 
 
 		# Define datasets and dataloaders for train and test sets
@@ -1180,45 +1015,14 @@ if __name__ == '__main__':
 
 
 
-
-
-
-
 		# """ TEST BLOCK """
 
-		# initialize data loading, explicitly seed random number generators for reproducibility
+		# # initialize data loading, explicitly seed random number generators for reproducibility
 		# train_rng, test_rng = torch.Generator(), torch.Generator()
 		# train_rng.manual_seed(int(random_seed*1e10/41))
 		# test_rng.manual_seed(int(random_seed*1e10/79))
 		# train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, generator=train_rng)
 		# test_loader  = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, generator=test_rng)
-
-			
-		# # plot_dw_alpha(data, figname='fig.png')
-		# plot_dw_alpha(train_loader, figname='fig.png')
-		# print ('\n', 1/0)
-
-
-		# Include this next block in the actual code where appropriate:
-		# Fit weighting function if weighted loss is activated
-		# if dw_settings != None:
-		# 	dw = DenseWeight(alpha=dw_settings['alpha'],
-		# 					 bandwidth=dw_settings['bandwidth'],
-		# 					 eps=dw_settings['eps'])
-
-		# 	y = np.log10(data.obs.kcat[train_idx])
-		# 	print (f'y.shape: {y.shape}')
-		# 	print (f'y: {y}')
-
-
-		# 	dw.fit(y)
-
-		# 	print (f'dw(-10): {dw([0,-10,-15,-16,-18,-26,-30])}')
-		# 	print (f'dw(-10): {dw(-11)}')
-
-		# 	print (1/0)
-
-
 
 
 		# for batch_idx, batch in enumerate(train_loader):
@@ -1228,6 +1032,9 @@ if __name__ == '__main__':
 		# 	print (batch['order'])
 		# 	print (batch['paths'].shape)
 		# 	print ('\n\n\n\n\n')
+
+
+
 
 		# """ END TEST BLOCK """
 

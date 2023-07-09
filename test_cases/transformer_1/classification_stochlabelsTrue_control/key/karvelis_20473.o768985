@@ -1,0 +1,553 @@
+bt2200-39
+Sun Jul  2 19:02:59 EDT 2023
+DEVICE:  cpu
+Total parameters:     22849
+Trainable parameters: 22849
+
+
+Training variants:
+['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
+ 'Cys517Gly-Ser518Gly' 'Gln140Met-Ser225Gly' 'Gln140Met-Thr520Asp'
+ 'Gln475Hie' 'Glu311Asp' 'Glu492Asn' 'Ile436Val' 'Leu199Hip-Gln140Glu'
+ 'Leu347Glu' 'Leu501Gln' 'Leu501Hie' 'Met254Gln-Thr520Asn' 'Met472Lys'
+ 'Phe504Met' 'Ser225Gly-Gln140Glu' 'Ser257Ala' 'Ser276Ala'
+ 'Ser276Ala-Glu311Asp' 'Ser344Tyr' 'Ser487Ala' 'Thr464Ala'
+ 'Thr520Asp-Leu199Hie' 'Val258Thr'] 
+
+
+epoch 1 | CV fold 1/2 | 25/844 batches | lr 4.193e-06 | seconds/batch 0.677 | loss 6.849e-01 | sqrt(loss) 8.276e-01 | acc 0.52000
+epoch 1 | CV fold 1/2 | 50/844 batches | lr 8.560e-06 | seconds/batch 0.666 | loss 6.942e-01 | sqrt(loss) 8.332e-01 | acc 0.48750
+epoch 1 | CV fold 1/2 | 75/844 batches | lr 1.293e-05 | seconds/batch 0.672 | loss 6.735e-01 | sqrt(loss) 8.207e-01 | acc 0.52750
+epoch 1 | CV fold 1/2 | 100/844 batches | lr 1.729e-05 | seconds/batch 0.680 | loss 6.566e-01 | sqrt(loss) 8.103e-01 | acc 0.55875
+epoch 1 | CV fold 1/2 | 125/844 batches | lr 2.166e-05 | seconds/batch 0.668 | loss 6.509e-01 | sqrt(loss) 8.068e-01 | acc 0.58875
+epoch 1 | CV fold 1/2 | 150/844 batches | lr 2.603e-05 | seconds/batch 0.683 | loss 6.296e-01 | sqrt(loss) 7.935e-01 | acc 0.70750
+epoch 1 | CV fold 1/2 | 175/844 batches | lr 3.040e-05 | seconds/batch 0.656 | loss 6.023e-01 | sqrt(loss) 7.761e-01 | acc 0.88250
+epoch 1 | CV fold 1/2 | 200/844 batches | lr 3.476e-05 | seconds/batch 0.665 | loss 5.609e-01 | sqrt(loss) 7.490e-01 | acc 0.96500
+epoch 1 | CV fold 1/2 | 225/844 batches | lr 3.913e-05 | seconds/batch 0.664 | loss 4.917e-01 | sqrt(loss) 7.012e-01 | acc 0.99125
+epoch 1 | CV fold 1/2 | 250/844 batches | lr 4.350e-05 | seconds/batch 0.668 | loss 4.157e-01 | sqrt(loss) 6.448e-01 | acc 0.99750
+epoch 1 | CV fold 1/2 | 275/844 batches | lr 4.787e-05 | seconds/batch 0.663 | loss 3.520e-01 | sqrt(loss) 5.933e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 300/844 batches | lr 5.223e-05 | seconds/batch 0.650 | loss 2.968e-01 | sqrt(loss) 5.448e-01 | acc 0.99875
+epoch 1 | CV fold 1/2 | 325/844 batches | lr 5.660e-05 | seconds/batch 0.659 | loss 2.534e-01 | sqrt(loss) 5.033e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 350/844 batches | lr 6.097e-05 | seconds/batch 0.058 | loss 2.203e-01 | sqrt(loss) 4.693e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 375/844 batches | lr 6.534e-05 | seconds/batch 0.056 | loss 1.883e-01 | sqrt(loss) 4.339e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 400/844 batches | lr 6.970e-05 | seconds/batch 0.310 | loss 1.650e-01 | sqrt(loss) 4.062e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 425/844 batches | lr 7.407e-05 | seconds/batch 0.680 | loss 1.459e-01 | sqrt(loss) 3.820e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 450/844 batches | lr 7.844e-05 | seconds/batch 0.655 | loss 1.271e-01 | sqrt(loss) 3.565e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 475/844 batches | lr 8.280e-05 | seconds/batch 0.655 | loss 1.135e-01 | sqrt(loss) 3.370e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 500/844 batches | lr 8.717e-05 | seconds/batch 0.664 | loss 1.003e-01 | sqrt(loss) 3.166e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 525/844 batches | lr 9.154e-05 | seconds/batch 0.679 | loss 8.702e-02 | sqrt(loss) 2.950e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 550/844 batches | lr 9.591e-05 | seconds/batch 0.669 | loss 7.820e-02 | sqrt(loss) 2.796e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 575/844 batches | lr 1.003e-04 | seconds/batch 0.656 | loss 7.101e-02 | sqrt(loss) 2.665e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 600/844 batches | lr 1.046e-04 | seconds/batch 0.659 | loss 6.203e-02 | sqrt(loss) 2.491e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 625/844 batches | lr 1.090e-04 | seconds/batch 0.682 | loss 5.642e-02 | sqrt(loss) 2.375e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 650/844 batches | lr 1.134e-04 | seconds/batch 0.649 | loss 4.879e-02 | sqrt(loss) 2.209e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 675/844 batches | lr 1.177e-04 | seconds/batch 0.664 | loss 4.454e-02 | sqrt(loss) 2.111e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 700/844 batches | lr 1.221e-04 | seconds/batch 0.670 | loss 3.961e-02 | sqrt(loss) 1.990e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 725/844 batches | lr 1.265e-04 | seconds/batch 0.670 | loss 3.504e-02 | sqrt(loss) 1.872e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 750/844 batches | lr 1.308e-04 | seconds/batch 0.681 | loss 3.210e-02 | sqrt(loss) 1.792e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 775/844 batches | lr 1.352e-04 | seconds/batch 0.668 | loss 3.128e-02 | sqrt(loss) 1.769e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 800/844 batches | lr 1.396e-04 | seconds/batch 0.663 | loss 2.656e-02 | sqrt(loss) 1.630e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 825/844 batches | lr 1.439e-04 | seconds/batch 0.674 | loss 2.354e-02 | sqrt(loss) 1.534e-01 | acc 1.00000
+epoch 1 | CV fold 1/2 | 844/844 batches | lr 1.473e-04 | seconds/batch 0.511 | loss 1.752e-02 | sqrt(loss) 1.324e-01 | acc 0.76000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 1 | CV fold 1/2 |  time: 812.9s | valid loss 0.018 | accuracy 1.00000
+
+Validation variants:
+['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
+ 'Gln475Leu' 'Glu345Tyr' 'Ile398Thr' 'Leu195Hid' 'Leu261Asn' 'Leu347Hid'
+ 'Leu347Tyr' 'Leu372Gln' 'Leu501Hid' 'Leu501His' 'Met472Gln' 'Phe504Hid'
+ 'Ser135Ala-Ser225Gly' 'Ser225Gly-Ser518Gly' 'Ser295Gly' 'Ser391Cys'
+ 'Ser518Gly-Ala521Gly' 'Thr520Asp' 'Thr520Ser' 'Val258Thr-Thr520Asp'
+ 'Val415Asp' 'WT']
+
+Best loss achieved, saving model state to best_model_cvfold1.pt
+-------------------------------------------------------------------------------- 
+
+
+epoch 2 | CV fold 1/2 | 25/844 batches | lr 1.516e-04 | seconds/batch 0.654 | loss 1.869e-02 | sqrt(loss) 1.367e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 50/844 batches | lr 1.560e-04 | seconds/batch 0.667 | loss 1.783e-02 | sqrt(loss) 1.335e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 75/844 batches | lr 1.604e-04 | seconds/batch 0.674 | loss 1.670e-02 | sqrt(loss) 1.292e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 100/844 batches | lr 1.647e-04 | seconds/batch 0.672 | loss 1.476e-02 | sqrt(loss) 1.215e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 125/844 batches | lr 1.691e-04 | seconds/batch 0.669 | loss 1.497e-02 | sqrt(loss) 1.224e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 150/844 batches | lr 1.735e-04 | seconds/batch 0.656 | loss 1.420e-02 | sqrt(loss) 1.192e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 175/844 batches | lr 1.778e-04 | seconds/batch 0.662 | loss 1.260e-02 | sqrt(loss) 1.122e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 200/844 batches | lr 1.822e-04 | seconds/batch 0.670 | loss 1.168e-02 | sqrt(loss) 1.081e-01 | acc 1.00000
+epoch 2 | CV fold 1/2 | 225/844 batches | lr 1.866e-04 | seconds/batch 0.660 | loss 9.813e-03 | sqrt(loss) 9.906e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 250/844 batches | lr 1.909e-04 | seconds/batch 0.681 | loss 9.268e-03 | sqrt(loss) 9.627e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 275/844 batches | lr 1.953e-04 | seconds/batch 0.654 | loss 8.402e-03 | sqrt(loss) 9.166e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 300/844 batches | lr 1.997e-04 | seconds/batch 0.661 | loss 8.176e-03 | sqrt(loss) 9.042e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 325/844 batches | lr 2.040e-04 | seconds/batch 0.657 | loss 7.921e-03 | sqrt(loss) 8.900e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 350/844 batches | lr 2.084e-04 | seconds/batch 0.688 | loss 7.186e-03 | sqrt(loss) 8.477e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 375/844 batches | lr 2.128e-04 | seconds/batch 0.670 | loss 6.154e-03 | sqrt(loss) 7.845e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 400/844 batches | lr 2.171e-04 | seconds/batch 0.674 | loss 6.256e-03 | sqrt(loss) 7.909e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 425/844 batches | lr 2.215e-04 | seconds/batch 0.670 | loss 5.715e-03 | sqrt(loss) 7.560e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 450/844 batches | lr 2.259e-04 | seconds/batch 0.661 | loss 5.535e-03 | sqrt(loss) 7.440e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 475/844 batches | lr 2.302e-04 | seconds/batch 0.649 | loss 5.200e-03 | sqrt(loss) 7.211e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 500/844 batches | lr 2.346e-04 | seconds/batch 0.646 | loss 4.733e-03 | sqrt(loss) 6.880e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 525/844 batches | lr 2.390e-04 | seconds/batch 0.672 | loss 4.196e-03 | sqrt(loss) 6.478e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 550/844 batches | lr 2.433e-04 | seconds/batch 0.678 | loss 3.825e-03 | sqrt(loss) 6.185e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 575/844 batches | lr 2.477e-04 | seconds/batch 0.661 | loss 3.781e-03 | sqrt(loss) 6.149e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 600/844 batches | lr 2.521e-04 | seconds/batch 0.650 | loss 3.506e-03 | sqrt(loss) 5.921e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 625/844 batches | lr 2.564e-04 | seconds/batch 0.667 | loss 3.241e-03 | sqrt(loss) 5.693e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 650/844 batches | lr 2.608e-04 | seconds/batch 0.663 | loss 3.164e-03 | sqrt(loss) 5.625e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 675/844 batches | lr 2.652e-04 | seconds/batch 0.686 | loss 3.185e-03 | sqrt(loss) 5.643e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 700/844 batches | lr 2.696e-04 | seconds/batch 0.679 | loss 2.553e-03 | sqrt(loss) 5.053e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 725/844 batches | lr 2.739e-04 | seconds/batch 0.676 | loss 2.827e-03 | sqrt(loss) 5.317e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 750/844 batches | lr 2.783e-04 | seconds/batch 0.661 | loss 2.697e-03 | sqrt(loss) 5.194e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 775/844 batches | lr 2.827e-04 | seconds/batch 0.660 | loss 2.394e-03 | sqrt(loss) 4.893e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 800/844 batches | lr 2.870e-04 | seconds/batch 0.670 | loss 2.065e-03 | sqrt(loss) 4.545e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 825/844 batches | lr 2.914e-04 | seconds/batch 0.651 | loss 2.399e-03 | sqrt(loss) 4.898e-02 | acc 1.00000
+epoch 2 | CV fold 1/2 | 844/844 batches | lr 2.947e-04 | seconds/batch 0.509 | loss 1.590e-03 | sqrt(loss) 3.988e-02 | acc 0.76000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 2 | CV fold 1/2 |  time: 844.0s | valid loss 0.004 | accuracy 1.00000
+
+Validation variants:
+['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
+ 'Gln475Leu' 'Glu345Tyr' 'Ile398Thr' 'Leu195Hid' 'Leu261Asn' 'Leu347Hid'
+ 'Leu347Tyr' 'Leu372Gln' 'Leu501Hid' 'Leu501His' 'Met472Gln' 'Phe504Hid'
+ 'Ser135Ala-Ser225Gly' 'Ser225Gly-Ser518Gly' 'Ser295Gly' 'Ser391Cys'
+ 'Ser518Gly-Ala521Gly' 'Thr520Asp' 'Thr520Ser' 'Val258Thr-Thr520Asp'
+ 'Val415Asp' 'WT']
+
+Best loss achieved, saving model state to best_model_cvfold1.pt
+-------------------------------------------------------------------------------- 
+
+
+epoch 3 | CV fold 1/2 | 25/844 batches | lr 2.991e-04 | seconds/batch 0.641 | loss 1.950e-03 | sqrt(loss) 4.416e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 50/844 batches | lr 3.034e-04 | seconds/batch 0.658 | loss 1.872e-03 | sqrt(loss) 4.326e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 75/844 batches | lr 3.078e-04 | seconds/batch 0.668 | loss 1.894e-03 | sqrt(loss) 4.352e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 100/844 batches | lr 3.122e-04 | seconds/batch 0.654 | loss 1.684e-03 | sqrt(loss) 4.104e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 125/844 batches | lr 3.165e-04 | seconds/batch 0.684 | loss 1.553e-03 | sqrt(loss) 3.941e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 150/844 batches | lr 3.209e-04 | seconds/batch 0.698 | loss 1.431e-03 | sqrt(loss) 3.783e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 175/844 batches | lr 3.253e-04 | seconds/batch 0.655 | loss 1.387e-03 | sqrt(loss) 3.724e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 200/844 batches | lr 3.296e-04 | seconds/batch 0.658 | loss 1.400e-03 | sqrt(loss) 3.742e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 225/844 batches | lr 3.340e-04 | seconds/batch 0.684 | loss 1.265e-03 | sqrt(loss) 3.556e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 250/844 batches | lr 3.384e-04 | seconds/batch 0.673 | loss 1.169e-03 | sqrt(loss) 3.419e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 275/844 batches | lr 3.427e-04 | seconds/batch 0.650 | loss 1.186e-03 | sqrt(loss) 3.443e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 300/844 batches | lr 3.471e-04 | seconds/batch 0.674 | loss 1.129e-03 | sqrt(loss) 3.360e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 325/844 batches | lr 3.515e-04 | seconds/batch 0.666 | loss 1.131e-03 | sqrt(loss) 3.363e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 350/844 batches | lr 3.558e-04 | seconds/batch 0.652 | loss 9.275e-04 | sqrt(loss) 3.046e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 375/844 batches | lr 3.602e-04 | seconds/batch 0.671 | loss 9.531e-04 | sqrt(loss) 3.087e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 400/844 batches | lr 3.646e-04 | seconds/batch 0.657 | loss 8.868e-04 | sqrt(loss) 2.978e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 425/844 batches | lr 3.690e-04 | seconds/batch 0.655 | loss 9.728e-04 | sqrt(loss) 3.119e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 450/844 batches | lr 3.733e-04 | seconds/batch 0.660 | loss 9.544e-04 | sqrt(loss) 3.089e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 475/844 batches | lr 3.777e-04 | seconds/batch 0.678 | loss 8.075e-04 | sqrt(loss) 2.842e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 500/844 batches | lr 3.821e-04 | seconds/batch 0.666 | loss 8.212e-04 | sqrt(loss) 2.866e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 525/844 batches | lr 3.864e-04 | seconds/batch 0.650 | loss 7.826e-04 | sqrt(loss) 2.797e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 550/844 batches | lr 3.908e-04 | seconds/batch 0.654 | loss 7.164e-04 | sqrt(loss) 2.677e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 575/844 batches | lr 3.952e-04 | seconds/batch 0.677 | loss 7.419e-04 | sqrt(loss) 2.724e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 600/844 batches | lr 3.995e-04 | seconds/batch 0.665 | loss 7.331e-04 | sqrt(loss) 2.708e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 625/844 batches | lr 4.039e-04 | seconds/batch 0.678 | loss 6.338e-04 | sqrt(loss) 2.517e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 650/844 batches | lr 4.083e-04 | seconds/batch 0.673 | loss 7.220e-04 | sqrt(loss) 2.687e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 675/844 batches | lr 4.126e-04 | seconds/batch 0.645 | loss 6.264e-04 | sqrt(loss) 2.503e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 700/844 batches | lr 4.170e-04 | seconds/batch 0.671 | loss 5.347e-04 | sqrt(loss) 2.312e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 725/844 batches | lr 4.214e-04 | seconds/batch 0.661 | loss 5.122e-04 | sqrt(loss) 2.263e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 750/844 batches | lr 4.257e-04 | seconds/batch 0.685 | loss 5.247e-04 | sqrt(loss) 2.291e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 775/844 batches | lr 4.301e-04 | seconds/batch 0.674 | loss 5.782e-04 | sqrt(loss) 2.404e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 800/844 batches | lr 4.345e-04 | seconds/batch 0.686 | loss 6.063e-04 | sqrt(loss) 2.462e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 825/844 batches | lr 4.388e-04 | seconds/batch 0.672 | loss 4.826e-04 | sqrt(loss) 2.197e-02 | acc 1.00000
+epoch 3 | CV fold 1/2 | 844/844 batches | lr 4.421e-04 | seconds/batch 0.500 | loss 3.631e-04 | sqrt(loss) 1.906e-02 | acc 0.76000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 3 | CV fold 1/2 |  time: 842.6s | valid loss 0.003 | accuracy 0.99996
+
+Validation variants:
+['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
+ 'Gln475Leu' 'Glu345Tyr' 'Ile398Thr' 'Leu195Hid' 'Leu261Asn' 'Leu347Hid'
+ 'Leu347Tyr' 'Leu372Gln' 'Leu501Hid' 'Leu501His' 'Met472Gln' 'Phe504Hid'
+ 'Ser135Ala-Ser225Gly' 'Ser225Gly-Ser518Gly' 'Ser295Gly' 'Ser391Cys'
+ 'Ser518Gly-Ala521Gly' 'Thr520Asp' 'Thr520Ser' 'Val258Thr-Thr520Asp'
+ 'Val415Asp' 'WT']
+
+Best loss achieved, saving model state to best_model_cvfold1.pt
+-------------------------------------------------------------------------------- 
+
+
+epoch 4 | CV fold 1/2 | 25/844 batches | lr 4.465e-04 | seconds/batch 0.656 | loss 4.377e-04 | sqrt(loss) 2.092e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 50/844 batches | lr 4.509e-04 | seconds/batch 0.664 | loss 3.995e-04 | sqrt(loss) 1.999e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 75/844 batches | lr 4.552e-04 | seconds/batch 0.674 | loss 3.687e-04 | sqrt(loss) 1.920e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 100/844 batches | lr 4.596e-04 | seconds/batch 0.671 | loss 3.482e-04 | sqrt(loss) 1.866e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 125/844 batches | lr 4.640e-04 | seconds/batch 0.690 | loss 4.090e-04 | sqrt(loss) 2.022e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 150/844 batches | lr 4.684e-04 | seconds/batch 0.679 | loss 2.974e-04 | sqrt(loss) 1.724e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 175/844 batches | lr 4.727e-04 | seconds/batch 0.678 | loss 4.006e-04 | sqrt(loss) 2.002e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 200/844 batches | lr 4.771e-04 | seconds/batch 0.652 | loss 3.608e-04 | sqrt(loss) 1.899e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 225/844 batches | lr 4.815e-04 | seconds/batch 0.662 | loss 4.179e-04 | sqrt(loss) 2.044e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 250/844 batches | lr 4.858e-04 | seconds/batch 0.650 | loss 2.896e-04 | sqrt(loss) 1.702e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 275/844 batches | lr 4.902e-04 | seconds/batch 0.671 | loss 3.385e-04 | sqrt(loss) 1.840e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 300/844 batches | lr 4.946e-04 | seconds/batch 0.666 | loss 3.007e-04 | sqrt(loss) 1.734e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 325/844 batches | lr 4.989e-04 | seconds/batch 0.684 | loss 3.067e-04 | sqrt(loss) 1.751e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 350/844 batches | lr 5.033e-04 | seconds/batch 0.660 | loss 2.960e-04 | sqrt(loss) 1.721e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 375/844 batches | lr 5.077e-04 | seconds/batch 0.661 | loss 2.494e-04 | sqrt(loss) 1.579e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 400/844 batches | lr 5.120e-04 | seconds/batch 0.676 | loss 2.940e-04 | sqrt(loss) 1.715e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 425/844 batches | lr 5.164e-04 | seconds/batch 0.697 | loss 2.369e-04 | sqrt(loss) 1.539e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 450/844 batches | lr 5.208e-04 | seconds/batch 0.676 | loss 2.639e-04 | sqrt(loss) 1.625e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 475/844 batches | lr 5.251e-04 | seconds/batch 0.657 | loss 1.941e-04 | sqrt(loss) 1.393e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 500/844 batches | lr 5.295e-04 | seconds/batch 0.676 | loss 2.369e-04 | sqrt(loss) 1.539e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 525/844 batches | lr 5.339e-04 | seconds/batch 0.679 | loss 2.219e-04 | sqrt(loss) 1.490e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 550/844 batches | lr 5.382e-04 | seconds/batch 0.654 | loss 2.039e-04 | sqrt(loss) 1.428e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 575/844 batches | lr 5.426e-04 | seconds/batch 0.687 | loss 2.126e-04 | sqrt(loss) 1.458e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 600/844 batches | lr 5.470e-04 | seconds/batch 0.657 | loss 2.432e-04 | sqrt(loss) 1.559e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 625/844 batches | lr 5.513e-04 | seconds/batch 0.660 | loss 1.846e-04 | sqrt(loss) 1.359e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 650/844 batches | lr 5.557e-04 | seconds/batch 0.666 | loss 1.980e-04 | sqrt(loss) 1.407e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 675/844 batches | lr 5.601e-04 | seconds/batch 0.648 | loss 2.123e-04 | sqrt(loss) 1.457e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 700/844 batches | lr 5.644e-04 | seconds/batch 0.677 | loss 1.690e-04 | sqrt(loss) 1.300e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 725/844 batches | lr 5.688e-04 | seconds/batch 0.669 | loss 1.542e-04 | sqrt(loss) 1.242e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 750/844 batches | lr 5.732e-04 | seconds/batch 0.676 | loss 2.327e-04 | sqrt(loss) 1.526e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 775/844 batches | lr 5.775e-04 | seconds/batch 0.673 | loss 1.809e-04 | sqrt(loss) 1.345e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 800/844 batches | lr 5.819e-04 | seconds/batch 0.641 | loss 1.319e-04 | sqrt(loss) 1.149e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 825/844 batches | lr 5.863e-04 | seconds/batch 0.671 | loss 1.980e-04 | sqrt(loss) 1.407e-02 | acc 1.00000
+epoch 4 | CV fold 1/2 | 844/844 batches | lr 5.896e-04 | seconds/batch 0.506 | loss 9.502e-05 | sqrt(loss) 9.748e-03 | acc 0.76000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 4 | CV fold 1/2 |  time: 845.6s | valid loss 0.003 | accuracy 0.99993
+
+Validation variants:
+['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
+ 'Gln475Leu' 'Glu345Tyr' 'Ile398Thr' 'Leu195Hid' 'Leu261Asn' 'Leu347Hid'
+ 'Leu347Tyr' 'Leu372Gln' 'Leu501Hid' 'Leu501His' 'Met472Gln' 'Phe504Hid'
+ 'Ser135Ala-Ser225Gly' 'Ser225Gly-Ser518Gly' 'Ser295Gly' 'Ser391Cys'
+ 'Ser518Gly-Ala521Gly' 'Thr520Asp' 'Thr520Ser' 'Val258Thr-Thr520Asp'
+ 'Val415Asp' 'WT']
+-------------------------------------------------------------------------------- 
+
+
+epoch 5 | CV fold 1/2 | 25/844 batches | lr 5.940e-04 | seconds/batch 0.652 | loss 1.841e-04 | sqrt(loss) 1.357e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 50/844 batches | lr 5.983e-04 | seconds/batch 0.646 | loss 1.499e-04 | sqrt(loss) 1.224e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 75/844 batches | lr 6.027e-04 | seconds/batch 0.665 | loss 1.504e-04 | sqrt(loss) 1.226e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 100/844 batches | lr 6.071e-04 | seconds/batch 0.679 | loss 1.435e-04 | sqrt(loss) 1.198e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 125/844 batches | lr 6.114e-04 | seconds/batch 0.665 | loss 1.437e-04 | sqrt(loss) 1.199e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 150/844 batches | lr 6.158e-04 | seconds/batch 0.686 | loss 1.215e-04 | sqrt(loss) 1.102e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 175/844 batches | lr 6.202e-04 | seconds/batch 0.672 | loss 1.494e-04 | sqrt(loss) 1.222e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 200/844 batches | lr 6.245e-04 | seconds/batch 0.658 | loss 1.090e-04 | sqrt(loss) 1.044e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 225/844 batches | lr 6.289e-04 | seconds/batch 0.647 | loss 1.230e-04 | sqrt(loss) 1.109e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 250/844 batches | lr 6.333e-04 | seconds/batch 0.662 | loss 1.187e-04 | sqrt(loss) 1.089e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 275/844 batches | lr 6.376e-04 | seconds/batch 0.671 | loss 1.158e-04 | sqrt(loss) 1.076e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 300/844 batches | lr 6.420e-04 | seconds/batch 0.691 | loss 1.082e-04 | sqrt(loss) 1.040e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 325/844 batches | lr 6.464e-04 | seconds/batch 0.669 | loss 1.711e-04 | sqrt(loss) 1.308e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 350/844 batches | lr 6.507e-04 | seconds/batch 0.649 | loss 9.522e-05 | sqrt(loss) 9.758e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 375/844 batches | lr 6.551e-04 | seconds/batch 0.647 | loss 1.274e-04 | sqrt(loss) 1.129e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 400/844 batches | lr 6.595e-04 | seconds/batch 0.669 | loss 1.114e-04 | sqrt(loss) 1.055e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 425/844 batches | lr 6.638e-04 | seconds/batch 0.668 | loss 1.023e-04 | sqrt(loss) 1.011e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 450/844 batches | lr 6.682e-04 | seconds/batch 0.652 | loss 1.145e-04 | sqrt(loss) 1.070e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 475/844 batches | lr 6.726e-04 | seconds/batch 0.662 | loss 1.050e-04 | sqrt(loss) 1.025e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 500/844 batches | lr 6.769e-04 | seconds/batch 0.651 | loss 8.126e-05 | sqrt(loss) 9.015e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 525/844 batches | lr 6.813e-04 | seconds/batch 0.663 | loss 9.391e-05 | sqrt(loss) 9.690e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 550/844 batches | lr 6.857e-04 | seconds/batch 0.672 | loss 9.065e-05 | sqrt(loss) 9.521e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 575/844 batches | lr 6.900e-04 | seconds/batch 0.662 | loss 7.555e-05 | sqrt(loss) 8.692e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 600/844 batches | lr 6.944e-04 | seconds/batch 0.654 | loss 9.943e-05 | sqrt(loss) 9.971e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 625/844 batches | lr 6.988e-04 | seconds/batch 0.682 | loss 1.041e-04 | sqrt(loss) 1.020e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 650/844 batches | lr 6.966e-04 | seconds/batch 0.671 | loss 7.272e-05 | sqrt(loss) 8.528e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 675/844 batches | lr 6.944e-04 | seconds/batch 0.649 | loss 6.518e-05 | sqrt(loss) 8.074e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 700/844 batches | lr 6.923e-04 | seconds/batch 0.669 | loss 7.925e-05 | sqrt(loss) 8.902e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 725/844 batches | lr 6.902e-04 | seconds/batch 0.674 | loss 1.006e-04 | sqrt(loss) 1.003e-02 | acc 1.00000
+epoch 5 | CV fold 1/2 | 750/844 batches | lr 6.881e-04 | seconds/batch 0.663 | loss 7.194e-05 | sqrt(loss) 8.482e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 775/844 batches | lr 6.860e-04 | seconds/batch 0.669 | loss 6.479e-05 | sqrt(loss) 8.049e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 800/844 batches | lr 6.840e-04 | seconds/batch 0.655 | loss 6.008e-05 | sqrt(loss) 7.751e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 825/844 batches | lr 6.819e-04 | seconds/batch 0.666 | loss 8.238e-05 | sqrt(loss) 9.077e-03 | acc 1.00000
+epoch 5 | CV fold 1/2 | 844/844 batches | lr 6.804e-04 | seconds/batch 0.510 | loss 2.834e-05 | sqrt(loss) 5.324e-03 | acc 0.76000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 5 | CV fold 1/2 |  time: 844.8s | valid loss 0.001 | accuracy 1.00000
+
+Validation variants:
+['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
+ 'Gln475Leu' 'Glu345Tyr' 'Ile398Thr' 'Leu195Hid' 'Leu261Asn' 'Leu347Hid'
+ 'Leu347Tyr' 'Leu372Gln' 'Leu501Hid' 'Leu501His' 'Met472Gln' 'Phe504Hid'
+ 'Ser135Ala-Ser225Gly' 'Ser225Gly-Ser518Gly' 'Ser295Gly' 'Ser391Cys'
+ 'Ser518Gly-Ala521Gly' 'Thr520Asp' 'Thr520Ser' 'Val258Thr-Thr520Asp'
+ 'Val415Asp' 'WT']
+
+Best loss achieved, saving model state to best_model_cvfold1.pt
+-------------------------------------------------------------------------------- 
+
+
+Total parameters:     22849
+Trainable parameters: 22849
+
+
+Training variants:
+['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
+ 'Gln475Leu' 'Glu345Tyr' 'Ile398Thr' 'Leu195Hid' 'Leu261Asn' 'Leu347Hid'
+ 'Leu347Tyr' 'Leu372Gln' 'Leu501Hid' 'Leu501His' 'Met472Gln' 'Phe504Hid'
+ 'Ser135Ala-Ser225Gly' 'Ser225Gly-Ser518Gly' 'Ser295Gly' 'Ser391Cys'
+ 'Ser518Gly-Ala521Gly' 'Thr520Asp' 'Thr520Ser' 'Val258Thr-Thr520Asp'
+ 'Val415Asp' 'WT'] 
+
+
+epoch 1 | CV fold 2/2 | 25/875 batches | lr 4.193e-06 | seconds/batch 0.508 | loss 7.090e-01 | sqrt(loss) 8.420e-01 | acc 0.48875
+epoch 1 | CV fold 2/2 | 50/875 batches | lr 8.560e-06 | seconds/batch 0.649 | loss 7.107e-01 | sqrt(loss) 8.430e-01 | acc 0.47250
+epoch 1 | CV fold 2/2 | 75/875 batches | lr 1.293e-05 | seconds/batch 0.649 | loss 6.945e-01 | sqrt(loss) 8.333e-01 | acc 0.51000
+epoch 1 | CV fold 2/2 | 100/875 batches | lr 1.729e-05 | seconds/batch 0.677 | loss 6.872e-01 | sqrt(loss) 8.290e-01 | acc 0.49125
+epoch 1 | CV fold 2/2 | 125/875 batches | lr 2.166e-05 | seconds/batch 0.674 | loss 6.754e-01 | sqrt(loss) 8.219e-01 | acc 0.48875
+epoch 1 | CV fold 2/2 | 150/875 batches | lr 2.603e-05 | seconds/batch 0.678 | loss 6.550e-01 | sqrt(loss) 8.093e-01 | acc 0.59000
+epoch 1 | CV fold 2/2 | 175/875 batches | lr 3.040e-05 | seconds/batch 0.667 | loss 6.315e-01 | sqrt(loss) 7.947e-01 | acc 0.77875
+epoch 1 | CV fold 2/2 | 200/875 batches | lr 3.476e-05 | seconds/batch 0.623 | loss 6.107e-01 | sqrt(loss) 7.815e-01 | acc 0.86625
+epoch 1 | CV fold 2/2 | 225/875 batches | lr 3.913e-05 | seconds/batch 0.682 | loss 5.764e-01 | sqrt(loss) 7.592e-01 | acc 0.93250
+epoch 1 | CV fold 2/2 | 250/875 batches | lr 4.350e-05 | seconds/batch 0.667 | loss 5.278e-01 | sqrt(loss) 7.265e-01 | acc 0.97625
+epoch 1 | CV fold 2/2 | 275/875 batches | lr 4.787e-05 | seconds/batch 0.660 | loss 4.647e-01 | sqrt(loss) 6.817e-01 | acc 0.99375
+epoch 1 | CV fold 2/2 | 300/875 batches | lr 5.223e-05 | seconds/batch 0.662 | loss 4.095e-01 | sqrt(loss) 6.399e-01 | acc 0.99875
+epoch 1 | CV fold 2/2 | 325/875 batches | lr 5.660e-05 | seconds/batch 0.656 | loss 3.486e-01 | sqrt(loss) 5.904e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 350/875 batches | lr 6.097e-05 | seconds/batch 0.647 | loss 2.954e-01 | sqrt(loss) 5.435e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 375/875 batches | lr 6.534e-05 | seconds/batch 0.676 | loss 2.480e-01 | sqrt(loss) 4.980e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 400/875 batches | lr 6.970e-05 | seconds/batch 0.677 | loss 2.139e-01 | sqrt(loss) 4.625e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 425/875 batches | lr 7.407e-05 | seconds/batch 0.676 | loss 1.815e-01 | sqrt(loss) 4.260e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 450/875 batches | lr 7.844e-05 | seconds/batch 0.643 | loss 1.591e-01 | sqrt(loss) 3.989e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 475/875 batches | lr 8.280e-05 | seconds/batch 0.656 | loss 1.375e-01 | sqrt(loss) 3.708e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 500/875 batches | lr 8.717e-05 | seconds/batch 0.661 | loss 1.201e-01 | sqrt(loss) 3.466e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 525/875 batches | lr 9.154e-05 | seconds/batch 0.656 | loss 1.050e-01 | sqrt(loss) 3.241e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 550/875 batches | lr 9.591e-05 | seconds/batch 0.655 | loss 8.975e-02 | sqrt(loss) 2.996e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 575/875 batches | lr 1.003e-04 | seconds/batch 0.634 | loss 7.839e-02 | sqrt(loss) 2.800e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 600/875 batches | lr 1.046e-04 | seconds/batch 0.676 | loss 7.010e-02 | sqrt(loss) 2.648e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 625/875 batches | lr 1.090e-04 | seconds/batch 0.660 | loss 6.147e-02 | sqrt(loss) 2.479e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 650/875 batches | lr 1.134e-04 | seconds/batch 0.663 | loss 5.361e-02 | sqrt(loss) 2.315e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 675/875 batches | lr 1.177e-04 | seconds/batch 0.641 | loss 4.834e-02 | sqrt(loss) 2.199e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 700/875 batches | lr 1.221e-04 | seconds/batch 0.676 | loss 4.249e-02 | sqrt(loss) 2.061e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 725/875 batches | lr 1.265e-04 | seconds/batch 0.673 | loss 3.900e-02 | sqrt(loss) 1.975e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 750/875 batches | lr 1.308e-04 | seconds/batch 0.655 | loss 3.362e-02 | sqrt(loss) 1.834e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 775/875 batches | lr 1.352e-04 | seconds/batch 0.664 | loss 3.048e-02 | sqrt(loss) 1.746e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 800/875 batches | lr 1.396e-04 | seconds/batch 0.673 | loss 2.719e-02 | sqrt(loss) 1.649e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 825/875 batches | lr 1.439e-04 | seconds/batch 0.684 | loss 2.492e-02 | sqrt(loss) 1.578e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 850/875 batches | lr 1.483e-04 | seconds/batch 0.687 | loss 2.146e-02 | sqrt(loss) 1.465e-01 | acc 1.00000
+epoch 1 | CV fold 2/2 | 875/875 batches | lr 1.527e-04 | seconds/batch 0.668 | loss 1.910e-02 | sqrt(loss) 1.382e-01 | acc 1.00000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 1 | CV fold 2/2 |  time: 849.0s | valid loss 0.012 | accuracy 1.00000
+
+Validation variants:
+['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
+ 'Cys517Gly-Ser518Gly' 'Gln140Met-Ser225Gly' 'Gln140Met-Thr520Asp'
+ 'Gln475Hie' 'Glu311Asp' 'Glu492Asn' 'Ile436Val' 'Leu199Hip-Gln140Glu'
+ 'Leu347Glu' 'Leu501Gln' 'Leu501Hie' 'Met254Gln-Thr520Asn' 'Met472Lys'
+ 'Phe504Met' 'Ser225Gly-Gln140Glu' 'Ser257Ala' 'Ser276Ala'
+ 'Ser276Ala-Glu311Asp' 'Ser344Tyr' 'Ser487Ala' 'Thr464Ala'
+ 'Thr520Asp-Leu199Hie' 'Val258Thr']
+
+Best loss achieved, saving model state to best_model_cvfold2.pt
+-------------------------------------------------------------------------------- 
+
+
+epoch 2 | CV fold 2/2 | 25/875 batches | lr 1.570e-04 | seconds/batch 0.676 | loss 1.719e-02 | sqrt(loss) 1.311e-01 | acc 1.00000
+epoch 2 | CV fold 2/2 | 50/875 batches | lr 1.614e-04 | seconds/batch 0.666 | loss 1.566e-02 | sqrt(loss) 1.251e-01 | acc 1.00000
+epoch 2 | CV fold 2/2 | 75/875 batches | lr 1.658e-04 | seconds/batch 0.657 | loss 1.504e-02 | sqrt(loss) 1.226e-01 | acc 1.00000
+epoch 2 | CV fold 2/2 | 100/875 batches | lr 1.702e-04 | seconds/batch 0.656 | loss 1.356e-02 | sqrt(loss) 1.164e-01 | acc 1.00000
+epoch 2 | CV fold 2/2 | 125/875 batches | lr 1.745e-04 | seconds/batch 0.681 | loss 1.188e-02 | sqrt(loss) 1.090e-01 | acc 1.00000
+epoch 2 | CV fold 2/2 | 150/875 batches | lr 1.789e-04 | seconds/batch 0.670 | loss 1.110e-02 | sqrt(loss) 1.053e-01 | acc 1.00000
+epoch 2 | CV fold 2/2 | 175/875 batches | lr 1.833e-04 | seconds/batch 0.649 | loss 9.369e-03 | sqrt(loss) 9.679e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 200/875 batches | lr 1.876e-04 | seconds/batch 0.667 | loss 9.525e-03 | sqrt(loss) 9.759e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 225/875 batches | lr 1.920e-04 | seconds/batch 0.675 | loss 8.177e-03 | sqrt(loss) 9.043e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 250/875 batches | lr 1.964e-04 | seconds/batch 0.665 | loss 8.179e-03 | sqrt(loss) 9.044e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 275/875 batches | lr 2.007e-04 | seconds/batch 0.653 | loss 7.078e-03 | sqrt(loss) 8.413e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 300/875 batches | lr 2.051e-04 | seconds/batch 0.658 | loss 6.092e-03 | sqrt(loss) 7.805e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 325/875 batches | lr 2.095e-04 | seconds/batch 0.684 | loss 6.192e-03 | sqrt(loss) 7.869e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 350/875 batches | lr 2.138e-04 | seconds/batch 0.685 | loss 5.358e-03 | sqrt(loss) 7.320e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 375/875 batches | lr 2.182e-04 | seconds/batch 0.652 | loss 5.266e-03 | sqrt(loss) 7.257e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 400/875 batches | lr 2.226e-04 | seconds/batch 0.666 | loss 4.908e-03 | sqrt(loss) 7.006e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 425/875 batches | lr 2.269e-04 | seconds/batch 0.673 | loss 4.211e-03 | sqrt(loss) 6.489e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 450/875 batches | lr 2.313e-04 | seconds/batch 0.652 | loss 3.809e-03 | sqrt(loss) 6.172e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 475/875 batches | lr 2.357e-04 | seconds/batch 0.664 | loss 3.896e-03 | sqrt(loss) 6.242e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 500/875 batches | lr 2.400e-04 | seconds/batch 0.686 | loss 3.479e-03 | sqrt(loss) 5.898e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 525/875 batches | lr 2.444e-04 | seconds/batch 0.665 | loss 3.070e-03 | sqrt(loss) 5.541e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 550/875 batches | lr 2.488e-04 | seconds/batch 0.666 | loss 3.373e-03 | sqrt(loss) 5.808e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 575/875 batches | lr 2.531e-04 | seconds/batch 0.658 | loss 3.007e-03 | sqrt(loss) 5.484e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 600/875 batches | lr 2.575e-04 | seconds/batch 0.676 | loss 2.556e-03 | sqrt(loss) 5.056e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 625/875 batches | lr 2.619e-04 | seconds/batch 0.668 | loss 2.649e-03 | sqrt(loss) 5.146e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 650/875 batches | lr 2.662e-04 | seconds/batch 0.645 | loss 2.444e-03 | sqrt(loss) 4.943e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 675/875 batches | lr 2.706e-04 | seconds/batch 0.668 | loss 2.349e-03 | sqrt(loss) 4.847e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 700/875 batches | lr 2.750e-04 | seconds/batch 0.669 | loss 2.132e-03 | sqrt(loss) 4.617e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 725/875 batches | lr 2.793e-04 | seconds/batch 0.653 | loss 2.042e-03 | sqrt(loss) 4.519e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 750/875 batches | lr 2.837e-04 | seconds/batch 0.662 | loss 1.909e-03 | sqrt(loss) 4.369e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 775/875 batches | lr 2.881e-04 | seconds/batch 0.657 | loss 1.651e-03 | sqrt(loss) 4.063e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 800/875 batches | lr 2.924e-04 | seconds/batch 0.655 | loss 1.637e-03 | sqrt(loss) 4.046e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 825/875 batches | lr 2.968e-04 | seconds/batch 0.643 | loss 1.855e-03 | sqrt(loss) 4.307e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 850/875 batches | lr 3.012e-04 | seconds/batch 0.672 | loss 1.456e-03 | sqrt(loss) 3.816e-02 | acc 1.00000
+epoch 2 | CV fold 2/2 | 875/875 batches | lr 3.055e-04 | seconds/batch 0.684 | loss 1.299e-03 | sqrt(loss) 3.604e-02 | acc 1.00000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 2 | CV fold 2/2 |  time: 855.7s | valid loss 0.000 | accuracy 1.00000
+
+Validation variants:
+['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
+ 'Cys517Gly-Ser518Gly' 'Gln140Met-Ser225Gly' 'Gln140Met-Thr520Asp'
+ 'Gln475Hie' 'Glu311Asp' 'Glu492Asn' 'Ile436Val' 'Leu199Hip-Gln140Glu'
+ 'Leu347Glu' 'Leu501Gln' 'Leu501Hie' 'Met254Gln-Thr520Asn' 'Met472Lys'
+ 'Phe504Met' 'Ser225Gly-Gln140Glu' 'Ser257Ala' 'Ser276Ala'
+ 'Ser276Ala-Glu311Asp' 'Ser344Tyr' 'Ser487Ala' 'Thr464Ala'
+ 'Thr520Asp-Leu199Hie' 'Val258Thr']
+
+Best loss achieved, saving model state to best_model_cvfold2.pt
+-------------------------------------------------------------------------------- 
+
+
+epoch 3 | CV fold 2/2 | 25/875 batches | lr 3.099e-04 | seconds/batch 0.669 | loss 1.423e-03 | sqrt(loss) 3.773e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 50/875 batches | lr 3.143e-04 | seconds/batch 0.625 | loss 1.284e-03 | sqrt(loss) 3.583e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 75/875 batches | lr 3.186e-04 | seconds/batch 0.647 | loss 1.137e-03 | sqrt(loss) 3.372e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 100/875 batches | lr 3.230e-04 | seconds/batch 0.661 | loss 1.179e-03 | sqrt(loss) 3.433e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 125/875 batches | lr 3.274e-04 | seconds/batch 0.656 | loss 1.139e-03 | sqrt(loss) 3.375e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 150/875 batches | lr 3.317e-04 | seconds/batch 0.669 | loss 1.049e-03 | sqrt(loss) 3.238e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 175/875 batches | lr 3.361e-04 | seconds/batch 0.657 | loss 9.501e-04 | sqrt(loss) 3.082e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 200/875 batches | lr 3.405e-04 | seconds/batch 0.667 | loss 1.058e-03 | sqrt(loss) 3.253e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 225/875 batches | lr 3.448e-04 | seconds/batch 0.666 | loss 1.008e-03 | sqrt(loss) 3.174e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 250/875 batches | lr 3.492e-04 | seconds/batch 0.667 | loss 8.532e-04 | sqrt(loss) 2.921e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 275/875 batches | lr 3.536e-04 | seconds/batch 0.642 | loss 8.265e-04 | sqrt(loss) 2.875e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 300/875 batches | lr 3.579e-04 | seconds/batch 0.654 | loss 7.272e-04 | sqrt(loss) 2.697e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 325/875 batches | lr 3.623e-04 | seconds/batch 0.667 | loss 8.033e-04 | sqrt(loss) 2.834e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 350/875 batches | lr 3.667e-04 | seconds/batch 0.659 | loss 6.619e-04 | sqrt(loss) 2.573e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 375/875 batches | lr 3.710e-04 | seconds/batch 0.679 | loss 6.913e-04 | sqrt(loss) 2.629e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 400/875 batches | lr 3.754e-04 | seconds/batch 0.663 | loss 6.879e-04 | sqrt(loss) 2.623e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 425/875 batches | lr 3.798e-04 | seconds/batch 0.659 | loss 6.156e-04 | sqrt(loss) 2.481e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 450/875 batches | lr 3.841e-04 | seconds/batch 0.685 | loss 7.310e-04 | sqrt(loss) 2.704e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 475/875 batches | lr 3.885e-04 | seconds/batch 0.692 | loss 6.939e-04 | sqrt(loss) 2.634e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 500/875 batches | lr 3.929e-04 | seconds/batch 0.688 | loss 6.890e-04 | sqrt(loss) 2.625e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 525/875 batches | lr 3.973e-04 | seconds/batch 0.671 | loss 5.911e-04 | sqrt(loss) 2.431e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 550/875 batches | lr 4.016e-04 | seconds/batch 0.653 | loss 4.826e-04 | sqrt(loss) 2.197e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 575/875 batches | lr 4.060e-04 | seconds/batch 0.645 | loss 6.196e-04 | sqrt(loss) 2.489e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 600/875 batches | lr 4.104e-04 | seconds/batch 0.672 | loss 4.547e-04 | sqrt(loss) 2.132e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 625/875 batches | lr 4.147e-04 | seconds/batch 0.648 | loss 5.435e-04 | sqrt(loss) 2.331e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 650/875 batches | lr 4.191e-04 | seconds/batch 0.663 | loss 5.001e-04 | sqrt(loss) 2.236e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 675/875 batches | lr 4.235e-04 | seconds/batch 0.624 | loss 4.529e-04 | sqrt(loss) 2.128e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 700/875 batches | lr 4.278e-04 | seconds/batch 0.670 | loss 4.362e-04 | sqrt(loss) 2.088e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 725/875 batches | lr 4.322e-04 | seconds/batch 0.690 | loss 5.140e-04 | sqrt(loss) 2.267e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 750/875 batches | lr 4.366e-04 | seconds/batch 0.655 | loss 3.632e-04 | sqrt(loss) 1.906e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 775/875 batches | lr 4.409e-04 | seconds/batch 0.660 | loss 3.749e-04 | sqrt(loss) 1.936e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 800/875 batches | lr 4.453e-04 | seconds/batch 0.663 | loss 3.864e-04 | sqrt(loss) 1.966e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 825/875 batches | lr 4.497e-04 | seconds/batch 0.665 | loss 3.520e-04 | sqrt(loss) 1.876e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 850/875 batches | lr 4.540e-04 | seconds/batch 0.653 | loss 2.907e-04 | sqrt(loss) 1.705e-02 | acc 1.00000
+epoch 3 | CV fold 2/2 | 875/875 batches | lr 4.584e-04 | seconds/batch 0.663 | loss 4.032e-04 | sqrt(loss) 2.008e-02 | acc 1.00000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 3 | CV fold 2/2 |  time: 850.4s | valid loss 0.000 | accuracy 1.00000
+
+Validation variants:
+['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
+ 'Cys517Gly-Ser518Gly' 'Gln140Met-Ser225Gly' 'Gln140Met-Thr520Asp'
+ 'Gln475Hie' 'Glu311Asp' 'Glu492Asn' 'Ile436Val' 'Leu199Hip-Gln140Glu'
+ 'Leu347Glu' 'Leu501Gln' 'Leu501Hie' 'Met254Gln-Thr520Asn' 'Met472Lys'
+ 'Phe504Met' 'Ser225Gly-Gln140Glu' 'Ser257Ala' 'Ser276Ala'
+ 'Ser276Ala-Glu311Asp' 'Ser344Tyr' 'Ser487Ala' 'Thr464Ala'
+ 'Thr520Asp-Leu199Hie' 'Val258Thr']
+
+Best loss achieved, saving model state to best_model_cvfold2.pt
+-------------------------------------------------------------------------------- 
+
+
+epoch 4 | CV fold 2/2 | 25/875 batches | lr 4.628e-04 | seconds/batch 0.650 | loss 2.876e-04 | sqrt(loss) 1.696e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 50/875 batches | lr 4.671e-04 | seconds/batch 0.685 | loss 3.449e-04 | sqrt(loss) 1.857e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 75/875 batches | lr 4.715e-04 | seconds/batch 0.659 | loss 2.831e-04 | sqrt(loss) 1.683e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 100/875 batches | lr 4.759e-04 | seconds/batch 0.663 | loss 3.371e-04 | sqrt(loss) 1.836e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 125/875 batches | lr 4.802e-04 | seconds/batch 0.669 | loss 3.016e-04 | sqrt(loss) 1.737e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 150/875 batches | lr 4.846e-04 | seconds/batch 0.681 | loss 2.857e-04 | sqrt(loss) 1.690e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 175/875 batches | lr 4.890e-04 | seconds/batch 0.660 | loss 2.592e-04 | sqrt(loss) 1.610e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 200/875 batches | lr 4.933e-04 | seconds/batch 0.664 | loss 2.083e-04 | sqrt(loss) 1.443e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 225/875 batches | lr 4.977e-04 | seconds/batch 0.673 | loss 2.391e-04 | sqrt(loss) 1.546e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 250/875 batches | lr 5.021e-04 | seconds/batch 0.672 | loss 2.219e-04 | sqrt(loss) 1.490e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 275/875 batches | lr 5.064e-04 | seconds/batch 0.665 | loss 2.365e-04 | sqrt(loss) 1.538e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 300/875 batches | lr 5.108e-04 | seconds/batch 0.671 | loss 1.812e-04 | sqrt(loss) 1.346e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 325/875 batches | lr 5.152e-04 | seconds/batch 0.657 | loss 2.068e-04 | sqrt(loss) 1.438e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 350/875 batches | lr 5.195e-04 | seconds/batch 0.653 | loss 2.160e-04 | sqrt(loss) 1.470e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 375/875 batches | lr 5.239e-04 | seconds/batch 0.672 | loss 2.470e-04 | sqrt(loss) 1.572e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 400/875 batches | lr 5.283e-04 | seconds/batch 0.678 | loss 1.961e-04 | sqrt(loss) 1.400e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 425/875 batches | lr 5.326e-04 | seconds/batch 0.664 | loss 1.507e-04 | sqrt(loss) 1.227e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 450/875 batches | lr 5.370e-04 | seconds/batch 0.675 | loss 2.077e-04 | sqrt(loss) 1.441e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 475/875 batches | lr 5.414e-04 | seconds/batch 0.673 | loss 1.746e-04 | sqrt(loss) 1.321e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 500/875 batches | lr 5.457e-04 | seconds/batch 0.671 | loss 1.838e-04 | sqrt(loss) 1.356e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 525/875 batches | lr 5.501e-04 | seconds/batch 0.648 | loss 1.768e-04 | sqrt(loss) 1.330e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 550/875 batches | lr 5.545e-04 | seconds/batch 0.670 | loss 1.412e-04 | sqrt(loss) 1.188e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 575/875 batches | lr 5.588e-04 | seconds/batch 0.636 | loss 1.958e-04 | sqrt(loss) 1.399e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 600/875 batches | lr 5.632e-04 | seconds/batch 0.660 | loss 1.549e-04 | sqrt(loss) 1.245e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 625/875 batches | lr 5.676e-04 | seconds/batch 0.659 | loss 1.335e-04 | sqrt(loss) 1.155e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 650/875 batches | lr 5.719e-04 | seconds/batch 0.670 | loss 1.555e-04 | sqrt(loss) 1.247e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 675/875 batches | lr 5.763e-04 | seconds/batch 0.661 | loss 1.409e-04 | sqrt(loss) 1.187e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 700/875 batches | lr 5.807e-04 | seconds/batch 0.667 | loss 1.903e-04 | sqrt(loss) 1.379e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 725/875 batches | lr 5.850e-04 | seconds/batch 0.667 | loss 1.183e-04 | sqrt(loss) 1.088e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 750/875 batches | lr 5.894e-04 | seconds/batch 0.671 | loss 1.256e-04 | sqrt(loss) 1.121e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 775/875 batches | lr 5.938e-04 | seconds/batch 0.659 | loss 1.330e-04 | sqrt(loss) 1.153e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 800/875 batches | lr 5.981e-04 | seconds/batch 0.676 | loss 1.319e-04 | sqrt(loss) 1.148e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 825/875 batches | lr 6.025e-04 | seconds/batch 0.668 | loss 1.391e-04 | sqrt(loss) 1.180e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 850/875 batches | lr 6.069e-04 | seconds/batch 0.665 | loss 1.460e-04 | sqrt(loss) 1.208e-02 | acc 1.00000
+epoch 4 | CV fold 2/2 | 875/875 batches | lr 6.113e-04 | seconds/batch 0.667 | loss 1.547e-04 | sqrt(loss) 1.244e-02 | acc 1.00000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 4 | CV fold 2/2 |  time: 856.8s | valid loss 0.000 | accuracy 1.00000
+
+Validation variants:
+['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
+ 'Cys517Gly-Ser518Gly' 'Gln140Met-Ser225Gly' 'Gln140Met-Thr520Asp'
+ 'Gln475Hie' 'Glu311Asp' 'Glu492Asn' 'Ile436Val' 'Leu199Hip-Gln140Glu'
+ 'Leu347Glu' 'Leu501Gln' 'Leu501Hie' 'Met254Gln-Thr520Asn' 'Met472Lys'
+ 'Phe504Met' 'Ser225Gly-Gln140Glu' 'Ser257Ala' 'Ser276Ala'
+ 'Ser276Ala-Glu311Asp' 'Ser344Tyr' 'Ser487Ala' 'Thr464Ala'
+ 'Thr520Asp-Leu199Hie' 'Val258Thr']
+
+Best loss achieved, saving model state to best_model_cvfold2.pt
+-------------------------------------------------------------------------------- 
+
+
+epoch 5 | CV fold 2/2 | 25/875 batches | lr 6.156e-04 | seconds/batch 0.663 | loss 1.803e-04 | sqrt(loss) 1.343e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 50/875 batches | lr 6.200e-04 | seconds/batch 0.641 | loss 7.784e-05 | sqrt(loss) 8.823e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 75/875 batches | lr 6.244e-04 | seconds/batch 0.672 | loss 9.067e-05 | sqrt(loss) 9.522e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 100/875 batches | lr 6.287e-04 | seconds/batch 0.688 | loss 1.201e-04 | sqrt(loss) 1.096e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 125/875 batches | lr 6.331e-04 | seconds/batch 0.674 | loss 2.770e-04 | sqrt(loss) 1.664e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 150/875 batches | lr 6.375e-04 | seconds/batch 0.670 | loss 1.123e-04 | sqrt(loss) 1.060e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 175/875 batches | lr 6.418e-04 | seconds/batch 0.666 | loss 1.231e-04 | sqrt(loss) 1.110e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 200/875 batches | lr 6.462e-04 | seconds/batch 0.673 | loss 1.163e-04 | sqrt(loss) 1.078e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 225/875 batches | lr 6.506e-04 | seconds/batch 0.655 | loss 1.120e-04 | sqrt(loss) 1.058e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 250/875 batches | lr 6.549e-04 | seconds/batch 0.660 | loss 6.712e-05 | sqrt(loss) 8.192e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 275/875 batches | lr 6.593e-04 | seconds/batch 0.680 | loss 7.409e-05 | sqrt(loss) 8.608e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 300/875 batches | lr 6.637e-04 | seconds/batch 0.666 | loss 6.077e-05 | sqrt(loss) 7.796e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 325/875 batches | lr 6.680e-04 | seconds/batch 0.686 | loss 7.949e-05 | sqrt(loss) 8.916e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 350/875 batches | lr 6.724e-04 | seconds/batch 0.663 | loss 6.116e-05 | sqrt(loss) 7.821e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 375/875 batches | lr 6.768e-04 | seconds/batch 0.678 | loss 9.859e-05 | sqrt(loss) 9.929e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 400/875 batches | lr 6.811e-04 | seconds/batch 0.662 | loss 8.611e-05 | sqrt(loss) 9.280e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 425/875 batches | lr 6.855e-04 | seconds/batch 0.659 | loss 6.423e-05 | sqrt(loss) 8.014e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 450/875 batches | lr 6.899e-04 | seconds/batch 0.659 | loss 7.041e-05 | sqrt(loss) 8.391e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 475/875 batches | lr 6.942e-04 | seconds/batch 0.670 | loss 1.007e-04 | sqrt(loss) 1.004e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 500/875 batches | lr 6.986e-04 | seconds/batch 0.673 | loss 7.537e-05 | sqrt(loss) 8.682e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 525/875 batches | lr 6.967e-04 | seconds/batch 0.664 | loss 6.249e-05 | sqrt(loss) 7.905e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 550/875 batches | lr 6.945e-04 | seconds/batch 0.671 | loss 6.821e-05 | sqrt(loss) 8.259e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 575/875 batches | lr 6.924e-04 | seconds/batch 0.680 | loss 6.930e-05 | sqrt(loss) 8.325e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 600/875 batches | lr 6.903e-04 | seconds/batch 0.671 | loss 6.152e-05 | sqrt(loss) 7.844e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 625/875 batches | lr 6.882e-04 | seconds/batch 0.648 | loss 6.370e-05 | sqrt(loss) 7.981e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 650/875 batches | lr 6.861e-04 | seconds/batch 0.673 | loss 6.870e-05 | sqrt(loss) 8.288e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 675/875 batches | lr 6.841e-04 | seconds/batch 0.668 | loss 6.976e-05 | sqrt(loss) 8.352e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 700/875 batches | lr 6.820e-04 | seconds/batch 0.644 | loss 7.078e-05 | sqrt(loss) 8.413e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 725/875 batches | lr 6.800e-04 | seconds/batch 0.667 | loss 7.960e-05 | sqrt(loss) 8.922e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 750/875 batches | lr 6.780e-04 | seconds/batch 0.664 | loss 4.353e-05 | sqrt(loss) 6.598e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 775/875 batches | lr 6.760e-04 | seconds/batch 0.677 | loss 1.807e-04 | sqrt(loss) 1.344e-02 | acc 1.00000
+epoch 5 | CV fold 2/2 | 800/875 batches | lr 6.740e-04 | seconds/batch 0.686 | loss 5.268e-05 | sqrt(loss) 7.258e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 825/875 batches | lr 6.721e-04 | seconds/batch 0.663 | loss 4.791e-05 | sqrt(loss) 6.921e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 850/875 batches | lr 6.701e-04 | seconds/batch 0.666 | loss 7.021e-05 | sqrt(loss) 8.379e-03 | acc 1.00000
+epoch 5 | CV fold 2/2 | 875/875 batches | lr 6.682e-04 | seconds/batch 0.679 | loss 4.242e-05 | sqrt(loss) 6.513e-03 | acc 1.00000
+
+
+ --------------------------------------------------------------------------------
+End of epoch 5 | CV fold 2/2 |  time: 856.9s | valid loss 0.000 | accuracy 1.00000
+
+Validation variants:
+['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
+ 'Cys517Gly-Ser518Gly' 'Gln140Met-Ser225Gly' 'Gln140Met-Thr520Asp'
+ 'Gln475Hie' 'Glu311Asp' 'Glu492Asn' 'Ile436Val' 'Leu199Hip-Gln140Glu'
+ 'Leu347Glu' 'Leu501Gln' 'Leu501Hie' 'Met254Gln-Thr520Asn' 'Met472Lys'
+ 'Phe504Met' 'Ser225Gly-Gln140Glu' 'Ser257Ala' 'Ser276Ala'
+ 'Ser276Ala-Glu311Asp' 'Ser344Tyr' 'Ser487Ala' 'Thr464Ala'
+ 'Thr520Asp-Leu199Hie' 'Val258Thr']
+
+Best loss achieved, saving model state to best_model_cvfold2.pt
+-------------------------------------------------------------------------------- 
+
+
+DONE
+
+real	141m53.101s
+user	1338m49.726s
+sys	35m23.173s

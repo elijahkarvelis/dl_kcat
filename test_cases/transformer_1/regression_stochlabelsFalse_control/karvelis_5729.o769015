@@ -1,0 +1,16 @@
+bt2200-39
+Thu Jul  6 18:47:23 EDT 2023
+Traceback (most recent call last):
+  File "transformer_1.py", line 187, in <module>
+    from denseweight import DenseWeight
+  File "/usr/people/karvelis/anaconda3/lib/python3.7/site-packages/denseweight/__init__.py", line 1, in <module>
+    from .denseweight import DenseWeight
+  File "/usr/people/karvelis/anaconda3/lib/python3.7/site-packages/denseweight/denseweight.py", line 11, in <module>
+    from KDEpy import FFTKDE
+  File "/usr/people/karvelis/anaconda3/lib/python3.7/site-packages/KDEpy/__init__.py", line 4, in <module>
+    import importlib.metadata
+ModuleNotFoundError: No module named 'importlib.metadata'
+
+real	0m1.552s
+user	0m2.383s
+sys	0m3.597s
