@@ -441,11 +441,17 @@ class DataScaler():
 			kcat = self.sample_kcat(10**sample['kcat'], sample['kcat sem'])
 		else:
 			kcat = sample['kcat']
-
-		t_sample = {'paths': torch.from_numpy(paths).to(device),
-	      			'kcat': torch.from_numpy(np.array(kcat)).to(device),
-					'order': torch.from_numpy(np.array(sample['order'])).to(device)}
-
+		
+		try:
+			t_sample = {'paths': torch.from_numpy(paths).to(device),
+						'kcat': torch.from_numpy(np.array(kcat)).to(device),
+						'order': torch.from_numpy(np.array(sample['order'])).to(device)}
+		except:
+			# executes when PathTorchDataset is imported and executed by external programs
+			t_sample = {'paths': torch.from_numpy(paths).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu')),
+						'kcat': torch.from_numpy(np.array(kcat)).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu')),
+						'order': torch.from_numpy(np.array(sample['order'])).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))}
+			
 		return t_sample
 
 
