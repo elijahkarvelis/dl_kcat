@@ -1,3 +1,8 @@
+bt2200-38
+Mon Jul 17 11:08:58 EDT 2023
+DEVICE:  cpu
+Total parameters:     22849
+Trainable parameters: 22849
 
 
 Training variants:
@@ -7,7 +12,7 @@ Training variants:
  'Leu347Glu' 'Leu501Gln' 'Leu501Hie' 'Met254Gln-Thr520Asn' 'Met472Lys'
  'Phe504Met' 'Ser225Gly-Gln140Glu' 'Ser257Ala' 'Ser276Ala'
  'Ser276Ala-Glu311Asp' 'Ser344Tyr' 'Ser487Ala' 'Thr464Ala'
- 'Thr520Asp-Leu199Hie' 'Val258Thr']
+ 'Thr520Asp-Leu199Hie' 'Val258Thr'] 
 
 
 epoch 1 | CV fold 1/2 | 25/844 batches | lr 4.193e-06 | seconds/batch 0.673 | loss 6.788e-01 | sqrt(loss) 8.239e-01 | acc 0.54875
@@ -46,8 +51,8 @@ epoch 1 | CV fold 1/2 | 825/844 batches | lr 1.439e-04 | seconds/batch 0.661 | l
 epoch 1 | CV fold 1/2 | 844/844 batches | lr 1.473e-04 | seconds/batch 0.497 | loss 1.462e-02 | sqrt(loss) 1.209e-01 | acc 0.76000
 
 
---------------------------------------------------------------------------------
-End of epoch 1 | CV fold 1/2 | time 876.3s | valid loss 0.012 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 1 | CV fold 1/2 |  time: 876.3s | valid loss 0.012 | accuracy 1.00000
 
 Validation variants:
 ['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
@@ -58,7 +63,7 @@ Validation variants:
  'Val415Asp' 'WT']
 
 Best loss achieved, saving model state to best_model_cvfold1.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 2 | CV fold 1/2 | 25/844 batches | lr 1.516e-04 | seconds/batch 0.690 | loss 1.809e-02 | sqrt(loss) 1.345e-01 | acc 1.00000
@@ -97,8 +102,8 @@ epoch 2 | CV fold 1/2 | 825/844 batches | lr 2.914e-04 | seconds/batch 0.677 | l
 epoch 2 | CV fold 1/2 | 844/844 batches | lr 2.947e-04 | seconds/batch 0.511 | loss 8.364e-04 | sqrt(loss) 2.892e-02 | acc 0.76000
 
 
---------------------------------------------------------------------------------
-End of epoch 2 | CV fold 1/2 | time 843.4s | valid loss 0.000 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 2 | CV fold 1/2 |  time: 843.4s | valid loss 0.000 | accuracy 1.00000
 
 Validation variants:
 ['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
@@ -109,7 +114,7 @@ Validation variants:
  'Val415Asp' 'WT']
 
 Best loss achieved, saving model state to best_model_cvfold1.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 3 | CV fold 1/2 | 25/844 batches | lr 2.991e-04 | seconds/batch 0.687 | loss 1.079e-03 | sqrt(loss) 3.285e-02 | acc 1.00000
@@ -148,8 +153,8 @@ epoch 3 | CV fold 1/2 | 825/844 batches | lr 4.388e-04 | seconds/batch 0.664 | l
 epoch 3 | CV fold 1/2 | 844/844 batches | lr 4.421e-04 | seconds/batch 0.505 | loss 2.186e-04 | sqrt(loss) 1.478e-02 | acc 0.76000
 
 
---------------------------------------------------------------------------------
-End of epoch 3 | CV fold 1/2 | time 842.3s | valid loss 0.000 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 3 | CV fold 1/2 |  time: 842.3s | valid loss 0.000 | accuracy 1.00000
 
 Validation variants:
 ['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
@@ -160,7 +165,7 @@ Validation variants:
  'Val415Asp' 'WT']
 
 Best loss achieved, saving model state to best_model_cvfold1.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 4 | CV fold 1/2 | 25/844 batches | lr 4.465e-04 | seconds/batch 0.649 | loss 2.473e-04 | sqrt(loss) 1.573e-02 | acc 1.00000
@@ -199,8 +204,8 @@ epoch 4 | CV fold 1/2 | 825/844 batches | lr 5.863e-04 | seconds/batch 0.671 | l
 epoch 4 | CV fold 1/2 | 844/844 batches | lr 5.896e-04 | seconds/batch 0.496 | loss 5.303e-05 | sqrt(loss) 7.282e-03 | acc 0.76000
 
 
---------------------------------------------------------------------------------
-End of epoch 4 | CV fold 1/2 | time 843.0s | valid loss 0.000 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 4 | CV fold 1/2 |  time: 843.0s | valid loss 0.000 | accuracy 1.00000
 
 Validation variants:
 ['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
@@ -211,7 +216,7 @@ Validation variants:
  'Val415Asp' 'WT']
 
 Best loss achieved, saving model state to best_model_cvfold1.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 5 | CV fold 1/2 | 25/844 batches | lr 5.940e-04 | seconds/batch 0.674 | loss 9.683e-05 | sqrt(loss) 9.840e-03 | acc 1.00000
@@ -250,8 +255,8 @@ epoch 5 | CV fold 1/2 | 825/844 batches | lr 6.819e-04 | seconds/batch 0.675 | l
 epoch 5 | CV fold 1/2 | 844/844 batches | lr 6.804e-04 | seconds/batch 0.494 | loss 3.217e-05 | sqrt(loss) 5.672e-03 | acc 0.76000
 
 
---------------------------------------------------------------------------------
-End of epoch 5 | CV fold 1/2 | time 840.4s | valid loss 0.000 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 5 | CV fold 1/2 |  time: 840.4s | valid loss 0.000 | accuracy 1.00000
 
 Validation variants:
 ['Ala139Gly' 'Ala278Ser' 'Ala497Ser' 'Asp346Pro' 'Cys250Ser' 'Gln140Met'
@@ -262,9 +267,11 @@ Validation variants:
  'Val415Asp' 'WT']
 
 Best loss achieved, saving model state to best_model_cvfold1.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
+Total parameters:     22849
+Trainable parameters: 22849
 
 
 Training variants:
@@ -273,7 +280,7 @@ Training variants:
  'Leu347Tyr' 'Leu372Gln' 'Leu501Hid' 'Leu501His' 'Met472Gln' 'Phe504Hid'
  'Ser135Ala-Ser225Gly' 'Ser225Gly-Ser518Gly' 'Ser295Gly' 'Ser391Cys'
  'Ser518Gly-Ala521Gly' 'Thr520Asp' 'Thr520Ser' 'Val258Thr-Thr520Asp'
- 'Val415Asp' 'WT']
+ 'Val415Asp' 'WT'] 
 
 
 epoch 1 | CV fold 2/2 | 25/875 batches | lr 4.193e-06 | seconds/batch 0.620 | loss 6.989e-01 | sqrt(loss) 8.360e-01 | acc 0.52500
@@ -313,8 +320,8 @@ epoch 1 | CV fold 2/2 | 850/875 batches | lr 1.483e-04 | seconds/batch 0.674 | l
 epoch 1 | CV fold 2/2 | 875/875 batches | lr 1.527e-04 | seconds/batch 0.650 | loss 2.601e-02 | sqrt(loss) 1.613e-01 | acc 1.00000
 
 
---------------------------------------------------------------------------------
-End of epoch 1 | CV fold 2/2 | time 850.0s | valid loss 0.016 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 1 | CV fold 2/2 |  time: 850.0s | valid loss 0.016 | accuracy 1.00000
 
 Validation variants:
 ['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
@@ -326,7 +333,7 @@ Validation variants:
  'Thr520Asp-Leu199Hie' 'Val258Thr']
 
 Best loss achieved, saving model state to best_model_cvfold2.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 2 | CV fold 2/2 | 25/875 batches | lr 1.570e-04 | seconds/batch 0.659 | loss 2.280e-02 | sqrt(loss) 1.510e-01 | acc 1.00000
@@ -366,8 +373,8 @@ epoch 2 | CV fold 2/2 | 850/875 batches | lr 3.012e-04 | seconds/batch 0.671 | l
 epoch 2 | CV fold 2/2 | 875/875 batches | lr 3.055e-04 | seconds/batch 0.664 | loss 2.124e-03 | sqrt(loss) 4.608e-02 | acc 1.00000
 
 
---------------------------------------------------------------------------------
-End of epoch 2 | CV fold 2/2 | time 851.8s | valid loss 0.001 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 2 | CV fold 2/2 |  time: 851.8s | valid loss 0.001 | accuracy 1.00000
 
 Validation variants:
 ['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
@@ -379,7 +386,7 @@ Validation variants:
  'Thr520Asp-Leu199Hie' 'Val258Thr']
 
 Best loss achieved, saving model state to best_model_cvfold2.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 3 | CV fold 2/2 | 25/875 batches | lr 3.099e-04 | seconds/batch 0.680 | loss 2.251e-03 | sqrt(loss) 4.745e-02 | acc 1.00000
@@ -419,8 +426,8 @@ epoch 3 | CV fold 2/2 | 850/875 batches | lr 4.540e-04 | seconds/batch 0.668 | l
 epoch 3 | CV fold 2/2 | 875/875 batches | lr 4.584e-04 | seconds/batch 0.668 | loss 5.265e-04 | sqrt(loss) 2.295e-02 | acc 1.00000
 
 
---------------------------------------------------------------------------------
-End of epoch 3 | CV fold 2/2 | time 851.5s | valid loss 0.000 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 3 | CV fold 2/2 |  time: 851.5s | valid loss 0.000 | accuracy 1.00000
 
 Validation variants:
 ['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
@@ -432,7 +439,7 @@ Validation variants:
  'Thr520Asp-Leu199Hie' 'Val258Thr']
 
 Best loss achieved, saving model state to best_model_cvfold2.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 4 | CV fold 2/2 | 25/875 batches | lr 4.628e-04 | seconds/batch 0.680 | loss 4.184e-04 | sqrt(loss) 2.046e-02 | acc 1.00000
@@ -472,8 +479,8 @@ epoch 4 | CV fold 2/2 | 850/875 batches | lr 6.069e-04 | seconds/batch 0.650 | l
 epoch 4 | CV fold 2/2 | 875/875 batches | lr 6.113e-04 | seconds/batch 0.678 | loss 1.149e-04 | sqrt(loss) 1.072e-02 | acc 1.00000
 
 
---------------------------------------------------------------------------------
-End of epoch 4 | CV fold 2/2 | time 849.4s | valid loss 0.000 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 4 | CV fold 2/2 |  time: 849.4s | valid loss 0.000 | accuracy 1.00000
 
 Validation variants:
 ['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
@@ -485,7 +492,7 @@ Validation variants:
  'Thr520Asp-Leu199Hie' 'Val258Thr']
 
 Best loss achieved, saving model state to best_model_cvfold2.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
 epoch 5 | CV fold 2/2 | 25/875 batches | lr 6.156e-04 | seconds/batch 0.640 | loss 1.625e-04 | sqrt(loss) 1.275e-02 | acc 1.00000
@@ -525,8 +532,8 @@ epoch 5 | CV fold 2/2 | 850/875 batches | lr 6.701e-04 | seconds/batch 0.674 | l
 epoch 5 | CV fold 2/2 | 875/875 batches | lr 6.682e-04 | seconds/batch 0.672 | loss 6.403e-05 | sqrt(loss) 8.002e-03 | acc 1.00000
 
 
---------------------------------------------------------------------------------
-End of epoch 5 | CV fold 2/2 | time 851.3s | valid loss 0.000 | accuracy 1.00000
+ --------------------------------------------------------------------------------
+End of epoch 5 | CV fold 2/2 |  time: 851.3s | valid loss 0.000 | accuracy 1.00000
 
 Validation variants:
 ['Ala278Gly' 'Ala291Gly' 'Asn502Hie' 'Cys250Glu-Glu311Cys'
@@ -538,6 +545,11 @@ Validation variants:
  'Thr520Asp-Leu199Hie' 'Val258Thr']
 
 Best loss achieved, saving model state to best_model_cvfold2.pt
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- 
 
 
+DONE
+
+real	142m55.689s
+user	1342m42.601s
+sys	36m24.666s

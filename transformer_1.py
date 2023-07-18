@@ -183,6 +183,7 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import GroupKFold
 import math
 import numpy as np
+import pandas as pd
 import pickle
 from denseweight import DenseWeight
 import matplotlib.pyplot as plt
@@ -499,6 +500,14 @@ class PathTorchDataset(Dataset):
 		path_idxs = self.pathdataset.obs.obs[selected_idx]
 		paths = self.pathdataset.data[path_idxs,:,:]
 
+		# Collect kcat value
+		if self.control_model:
+			# Update selected index to sample scrambled (random) target labels
+			selected_idx = self.elligible_idxs_shuffled[idx]
+
+		kcat = self.pathdataset.obs.kcat[selected_idx]
+		kcat_sem = self.pathdataset.obs.kcat_sem[selected_idx]
+
 		# Collect paths' order information
 		order = self.pathdataset.obs.order[selected_idx]
 		# we'll report order as the average across all the paths'
@@ -514,14 +523,6 @@ class PathTorchDataset(Dataset):
 			order = 1 if order==0.8 else 0
 		order = np.float32(order)
 
-		# Collect kcat value
-		if self.control_model:
-			selected_idx_shuffled = self.elligible_idxs_shuffled[idx]
-			kcat = self.pathdataset.obs.kcat[selected_idx_shuffled]
-			kcat_sem = self.pathdataset.obs.kcat_sem[selected_idx_shuffled]
-		else:
-			kcat = self.pathdataset.obs.kcat[selected_idx]
-			kcat_sem = self.pathdataset.obs.kcat_sem[selected_idx]
 		# take log bc kcat values span several orders of magnitude
 		log_kcat = np.float32(np.log10(kcat))
 		kcat_sem = np.float32(kcat_sem)
@@ -552,7 +553,7 @@ class PathTorchDataset(Dataset):
 			except:
 				# executes when PathTorchDataset is imported and executed by external programs
 				for i in sample:
-					sample[i] = torch.from_numpy(sample[i]).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+					sample[i] = torch.from_numpy(np.array(sample[i])).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
 		return sample
 
@@ -1007,7 +1008,7 @@ def plot_dw_alpha(pathdataset, alphas=[0, 0.5, 0.90, 0.95, 1.0], figsize=(16,8),
 
 	elif isinstance(pathdataset, DataLoader):
 		kcats = []
-		for batch_idx, batch in enumerate(train_loader):
+		for batch_idx, batch in enumerate(pathdataset):
 			kcats.append(batch['kcat'].detach().cpu().numpy())
 		kcats = np.concatenate(kcats)
 
