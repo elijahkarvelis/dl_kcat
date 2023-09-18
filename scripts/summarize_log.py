@@ -18,10 +18,11 @@ sys.path.append('/data/karvelis03/dl_kcat/scripts/')
 from pred_kcat import LogFile
 
 # Import other dependencies
-import pandas as pd
-import tempfile
-import matplotlib.pyplot as plt
-import seaborn as sns
+import numpy as np
+# import pandas as pd
+# import tempfile
+# import matplotlib.pyplot as plt
+# import seaborn as sns
 
 
 if __name__ == '__main__':
@@ -31,8 +32,16 @@ if __name__ == '__main__':
 		figname = sys.argv[2]
 	except:
 		figname = False
+	try:
+		logscale = bool(sys.argv[3])
+	except:
+		logscale = False
 
 	log = LogFile(logfile, figname=figname)
-	log.plot_summary()
+
+	if np.max(log.epochs['CV fold'].to_numpy()) > 1:
+		log.cv_summary(log=logscale)
+	else:
+		log.plot_summary()
 
 
