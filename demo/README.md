@@ -2,7 +2,7 @@
 
 The purpose of this folder is to demonstrate how to use the scripts in the `dl_kcat` repo. 
 
-Follow along in `demo.ipynb`, or view `demo.html` in a browser, to:
+Follow along in `demo.ipynb`, or download and view `demo.html` in a browser, to:
 * Learn how to access and work with the data
 * Learn how to train a model for two different learning tasks
 * Understand the different options and parameters when training models
