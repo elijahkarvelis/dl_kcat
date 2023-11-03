@@ -20,11 +20,11 @@ We use TIS to collect examples of both successful, as well as failed, attempted 
 ### Here is a successful reaction:
 Substrate is shown in light orange. NADPH is light purple. Mg ions are shown as white spheres with their coordinating waters in stick representation. The enzyme is shown in light gray.
 
-<img src="figs/r1.gif" width="300">
+<img src="figs/r1-opt.gif" width="300">
 
 ### Here is a failed reaction:
 
-<img src="figs/nr2.gif" width="300">
+<img src="figs/nr2-opt.gif" width="300">
 
 Note that $C_{5}$ makes significant progress toward the left, before hitching and ultimately returning to its starting point bound to $C_{4}$. 
 

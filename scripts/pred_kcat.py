@@ -750,98 +750,26 @@ class TransformerModel(nn.Module):
 		# Returns a predicted value for log10(kcat)
 
 		# Encode input
-		# print ('Initial encoding')
-		# print (f'src.shape: {src.shape}')
-		src = self.input_encoder(src) * np.sqrt(self.d_model) # np.sqrt(self.input_size) commented-out 9/19/23
-		# print (f'src.shape: {src.shape}\n\n')
+		src = self.input_encoder(src) * np.sqrt(self.d_model)
 
 		# Add positional encoding
-		# print ('Positional encoding')
-		# print (f'src.shape: {src.shape}')
 		src = self.pos_encoder(src)
-		# print (f'src.shape: {src.shape}\n\n')
 
-		# Pass through transformer encoder
-		# print ('Transformer encoding')
-		# print (f'src.shape: {src.shape}')
-		# start_enc = time.time()
-		# enc1 = self.transformer_encoder(src)   ### doesn't work for 4D data
-		# print (f'enc runtime: {time.time() - start_enc}')
-		# print (f'enc1.shape: {enc1.shape}')
-
-		"""	Rough, brute force way to handle 4D data:
-			Just pass each batch one at a time, where each
-			batch consists of path_set_size number of pathways.
-			The build in transformer layers in PyTorch accept the 
-			3D data of a single batch (but not 4D multiple batches).
-			It's like you trick it into treating the different pathways
-			as different, independent batches at this stage. We want
-			independence of pathways at this stage, because their order 
-			shouldn't matter, and a downstream pooling operation (or 
-			other trainable operations we can think about later) will
-			handle the simultaneous consideration of all pathways and 
-			how they relate to one another 
-
-			NOTE: the current brute force implementation actually works
-			      quite well and is just as fast for processesing something
-			      like [32, 10, 111, 512] as processing [320, 111, 512]
-
-		"""
-		# start_enc = time.time()
-		# enc1 = torch.zeros(src.shape)
-		# for i in range(src.shape[0]):
-		# 	enc1[i,:,:,:] = self.transformer_encoder(src[i,:,:,:])
-		# print (f'enc runtime: {time.time() - start_enc}')
-		# print (f'enc1.shape: {enc1.shape}\n\n')
-
-
-		"""
-		Alternative method that involves re-shaping.
-		However, I'm not certain the reshaping methods
-		preserve the original order and specific structure
-		of the data -- need to check that.
-
-		However, in practice the above for-loop option
-		seems to run faster, or at least it for sure isn't slower
-		"""
 		# convert src from 4D to 3D by stacking the first axis
 		orig_shape = src.shape
-		# print ('Transformer')
-		# print (f'src.shape: {src.shape}')
-		src = src.view(-1, orig_shape[-2], orig_shape[-1]) # double check that this is equivalent to vstacking
-		# print (f'src.shape: {src.shape}')
+		src = src.view(-1, orig_shape[-2], orig_shape[-1])
 		enc1 = self.transformer_encoder(src)
 		# convert enc1 back to 4D from 3D; this recovers separate batches along first axis
-		enc1 = enc1.view(-1, orig_shape[-3], orig_shape[-2], orig_shape[-1]) # double check that this is the inverse of vstacking and recovers the batches
-		# print (f'enc1.shape: {enc1.shape}\n\n')
-
+		enc1 = enc1.view(-1, orig_shape[-3], orig_shape[-2], orig_shape[-1])
 
 		# Do average pooling for each pathway across its time points
-		# print (f'enc1.shape: {enc1.shape}')
 		enc1 = torch.mean(enc1, 2)
-		# print (f'enc1.shape: {enc1.shape}')
 
-
-		# Take average across all paths in each observation (experiment with inclusion of other moments and/or max pooling)
-		# print ('Averaging over paths')
-		# print (f'enc1.shape: {enc1.shape}')
+		# Take average across all paths in each observation (could experiment with inclusion of other moments and/or max pooling)
 		enc = torch.mean(enc1, 1)
-		# print (f'enc.shape: {enc.shape}\n\n')
-
-
-		# Flatten each observation's averaged time series
-		# print ('Flattening avg time series')
-		# print (f'enc.shape: {enc.shape}')
-		# enc = torch.flatten(enc, start_dim=1)
-		# print (f'enc.shape: {enc.shape}\n\n')
 
 		# Prediction head
-		# print ('MLP prediction head')
-		# print (f'enc.shape: {enc.shape}')
 		out = self.mlp_head(enc)
-		# print (f'out.shape: {out.shape}')
-		# print (out, '\n\n')
-
 
 		if self.task == 'kcat regression':
 			return out
@@ -913,34 +841,20 @@ class LSTMModel(nn.Module):
 
 		# Pass through LSTM encoder
 		# convert src from 4D to 3D by stacking the first axis (the batches)
-		# print ('LSTM encoding:')
-		# print (f'src.shape: {src.shape}')
 		orig_shape = src.shape
 		src = src.view(-1, orig_shape[-2], orig_shape[-1])
-		# print (f'src.shape: {src.shape}')
 		enc1, _ = self.lstm_encoder(src)
-		# print (f'enc1.shape: {enc1.shape}')
 		# convert enc1 back to 4D from 3D; this recovers separate batches along first axis
 		enc1 = enc1.view(orig_shape[0], orig_shape[1], orig_shape[2], -1)
-		# print (f'enc1.shape: {enc1.shape}\n')
 
-		# Keep only the last time step's hidden state (which summarizes info from entire path)
+		# Keep only the last time step's hidden state
 		enc1 = enc1[:,:,-1,:]
-		# print (f'enc1.shape: {enc1.shape}\n\n')
 
-		# Take average across all paths in each observation (experiment with inclusion of other moments and/or max pooling)
-		# print ('Averaging over paths')
-		# print (f'enc1.shape: {enc1.shape}')
+		# Take average across all paths in each observation (could experiment with inclusion of other moments and/or max pooling)
 		enc = torch.mean(enc1, 1)
-		# print (f'enc.shape: {enc.shape}\n\n')
-
 
 		# Prediction head
-		# print ('MLP prediction head')
-		# print (f'enc.shape: {enc.shape}')
 		out = self.mlp_head(enc)
-		# print (f'out.shape: {out.shape}')
-		# print (out, '\n\n')
 
 		if self.task == 'kcat regression':
 			return out
@@ -993,9 +907,6 @@ class PositionalEncoding(nn.Module):
 		Can we do the below implementation instead? And require the the 
 		second-to-last axis corresponds to the time points?
         """
-        # print (f'x.shape: 		{x.shape}')
-        # print (f'self.pe.shape: {self.pe.shape}')
-        # print (f'self.pe[0:x.size(-2),:].shape: {self.pe[0:x.size(-2),:].shape}\n')
         x = x + self.pe[0:x.size(-2),:]
 
         return self.dropout(x)
