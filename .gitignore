@@ -1,6 +1,9 @@
 # Saved datasets
 data/
 
+# Variants table
+input/variants_summary.csv
+
 # Cache files
 __pycache*
 **/__pycache*
@@ -10,6 +13,7 @@ __pycache*
 hdf5*
 
 # Test files
+test*
 test_config.txt
 test/
 test_denseweight/
@@ -21,7 +25,14 @@ scr/
 transformer_1s/
 lstm_1s/
 plm/
+best_model*
+transformer_1_outp*
+prep_data*/
+model_evalu*ipynb
 
 # Python virtual env
 .env/
+
+# Old versions of scripts
+./scripts/*deprecated*
 

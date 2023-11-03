@@ -1,0 +1,26 @@
+# Specify the metadata file storing basic stats on each variant
+variants_summary = '/data/karvelis03/dl_kcat/input/variants_summary.csv'
+
+# Specify which variants to use
+fast_variants = ['Gln140Met-Thr520Asp', 'Leu501His', 'Thr520Asp-Leu199Hie']
+slow_variants = ['Met472Lys', 'Glu492Asn', 'WT']
+variants = fast_variants + slow_variants
+
+# Specify the type of transition pahtway data to use
+tp_data = True 
+order_parameters = [-0.4,0.8]
+seeds = [1,2,3,4,5]
+replicates = [1,2]
+subsample = 100
+num_shots = None
+time = [-200, 100]
+
+# Random seed
+random_seed = 333
+
+# Specify whether to use equilibrium (GS) data:
+gs_data = False
+
+package_loc = '/data/karvelis03/dl_kcat/'
+
+output_text = './prep_data_output.txt'

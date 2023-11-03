@@ -42,6 +42,7 @@ if __name__ == '__main__':
 	if np.max(log.epochs['CV fold'].to_numpy()) > 1:
 		log.cv_summary(log=logscale)
 	else:
-		log.plot_summary()
+		# log.plot_summary()
+		log.cv_summary(log=logscale)
 
 

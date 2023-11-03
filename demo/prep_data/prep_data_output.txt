@@ -1,0 +1,13 @@
+Python: 3.10.9 (main, Mar  1 2023, 18:23:06) [GCC 11.2.0]
+Total variants: 6, but will only use those with all required data
+
+Loading data...
+
+Data shape [pathways, timepoints, features]: (12000, 301, 70)
+
+Finished loading data
+6 variants will be used
+Variants:
+['Gln140Met-Thr520Asp' 'Glu492Asn' 'Leu501His' 'Met472Lys'
+ 'Thr520Asp-Leu199Hie' 'WT']
+

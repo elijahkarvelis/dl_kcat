@@ -4,7 +4,7 @@ PURPOSE:
 Quick script that sources from pred_kcat.py to compare between
 a control and test model. Run like so: 
 
->> python compare_test_control.py test_output_text.txt control_output_text.txt (figure.png)
+>> python compare_test_control.py test_output_text.txt control_output_text.txt metric (figure.png)
 
 where test_output_text.txt is the output log file written by the ML 
 training script (e.g., transformer_1.py) for the test model, 
