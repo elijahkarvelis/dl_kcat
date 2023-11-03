@@ -22,6 +22,7 @@ test.py
 
 # Scratch work
 scr/
+plm/
 transformer_1s/
 lstm_1s/
 plm/
