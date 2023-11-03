@@ -2,7 +2,7 @@
 data/
 
 # Variants table
-input/variants_summary.csv
+input/variants_summary*.csv
 
 # Cache files
 __pycache*
